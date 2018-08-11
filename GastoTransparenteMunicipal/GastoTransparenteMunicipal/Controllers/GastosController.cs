@@ -14,6 +14,10 @@ namespace GastoTransparenteMunicipal.Controllers
         public ActionResult Index()
         {
             var municipalidad = GetCurrentIdMunicipality();
+            if (municipalidad == null)
+                return RedirectToAction("List", "Home");
+            if(string.IsNullOrEmpty(municipalidad.Periodo))
+                return RedirectToAction("List","Home");
             ViewBag.logo = municipalidad.DireccionWeb + ".png";
             ViewBag.activos = new List<bool>{
                 municipalidad.Act_Proveedor,municipalidad.Act_Subsidio,municipalidad.Act_Corporacion,municipalidad.Act_Personal

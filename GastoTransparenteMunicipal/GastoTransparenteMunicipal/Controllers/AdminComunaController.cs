@@ -58,7 +58,11 @@ namespace GastoTransparenteMunicipal.Controllers
             var municipalidad = GetCurrentIdMunicipality();
             ViewBag.logo = municipalidad.DireccionWeb + ".png";
             ViewBag.administracion = true;
-            var anoscargados = db.Gasto_Ano.Where(r => r.Activo == true);         
+            ViewBag.admimuni = true;
+            ViewBag.anoscargados = municipalidad.Gasto_Ano.ToList() ;
+            ViewBag.activos = new bool[4]{
+                municipalidad.Act_Proveedor,municipalidad.Act_Subsidio,municipalidad.Act_Corporacion,municipalidad.Act_Personal
+            };
             return View();
         }
 
@@ -69,7 +73,9 @@ namespace GastoTransparenteMunicipal.Controllers
             ViewBag.Destacado = "hidden";
             ViewBag.administracion = true;
             ViewBag.admimuni = true;
-            ViewBag.Anos = new SelectList(db.Anos_Invisible.Where(r => r.IdMunicipalidad == municipalidad.IdMunicipalidad), "IdAno", "Nombre");
+            List<Anos_Invisible> lista = db.Anos_Invisible.Where(r => r.IdMunicipalidad == municipalidad.IdMunicipalidad).ToList();
+            ViewBag.contador = lista.Count;
+            ViewBag.Anos = new SelectList(lista, "IdAno", "Nombre");
             ViewBag.activos = new bool[4]{
                 municipalidad.Act_Proveedor,municipalidad.Act_Subsidio,municipalidad.Act_Corporacion,municipalidad.Act_Personal
             };
@@ -453,43 +459,11 @@ namespace GastoTransparenteMunicipal.Controllers
             db.Database.CommandTimeout = 2400;
             db.SaveChanges();
 
-            var gasto = db.Gasto_Ano.Find(ano);
+            Gasto_Ano gasto = db.Gasto_Ano.Find(ano);
+
             Municipalidad municipalidad = db.Municipalidad.Find(gasto.IdMunicipalidad);
 
-            var anos = db.Gasto_Ano.Where(r => r.Ano == gasto.Ano && r.IdMunicipalidad == gasto.IdMunicipalidad).OrderByDescending(r => r.Ano).ToList();
-            var maxAno = anos.First();
-            if (gasto.Ano == maxAno.Ano)
-            {
-                if(anos.Count >= 2)
-                {
-                    var newMaxAno = anos.Skip(1).First();
-                    var suma = db.SP_SumaGastoByIdAno(newMaxAno.IdAno).First();                    
-                    switch (gasto.Semestre)
-                    {
-                        case 0:
-                            municipalidad.Periodo = "El " + gasto.Ano + " ";
-                            break;
-                        case 1:
-                            municipalidad.Periodo = "A Marzo de " + gasto.Ano + " ";
-                            break;
-                        case 2:
-                            municipalidad.Periodo = "A Junio de " + gasto.Ano + " ";
-                            break;
-                        case 3:
-                            municipalidad.Periodo = "A Septiembre de " + gasto.Ano + " ";
-                            break;
-                    }
-                    municipalidad.TotalGastado = "$" + Ppuntos(suma.TotalGastado.Value);
-                    municipalidad.TotalPresupuestado = "$" + Ppuntos(suma.TotalPresupuestado.Value);
-                    db.SaveChanges();
-                } 
-                else
-                {
-                    municipalidad.TotalGastado = "$" + 0;
-                    municipalidad.TotalPresupuestado = "$" + 0;
-                    db.SaveChanges();
-                }
-            }
+            
 
 
 
@@ -506,29 +480,56 @@ namespace GastoTransparenteMunicipal.Controllers
             db.SP_DeleteProveedor(proveedors == null ? 0 : proveedors.IdAno);            
             db.SP_DeleteCorporacion(corporacions == null ? 0 : corporacions.IdAno);
             db.SP_DeletePersonal(personals == null ? 0 : personals.IdAno);
+ 
+            
+            db.SaveChanges();
 
+            #region Actualizar Municipalidad
+            Gasto_Ano anos = db.Gasto_Ano.Where(r => r.IdMunicipalidad == gasto.IdMunicipalidad).OrderByDescending(r => r.Ano).FirstOrDefault();
+
+            if (anos != null)
+            {
+                var suma = db.SP_SumaGastoByIdAno(anos.IdAno).First();
+                switch (anos.Semestre)
+                {
+                    case 0:
+                        municipalidad.Periodo = "El " + anos.Ano + " ";
+                        break;
+                    case 1:
+                        municipalidad.Periodo = "A Marzo de " + anos.Ano + " ";
+                        break;
+                    case 2:
+                        municipalidad.Periodo = "A Junio de " + anos.Ano + " ";
+                        break;
+                    case 3:
+                        municipalidad.Periodo = "A Septiembre de " + anos.Ano + " ";
+                        break;
+                }
+                municipalidad.TotalGastado = "$" + Ppuntos(suma.TotalGastado.Value);
+                municipalidad.TotalPresupuestado = "$" + Ppuntos(suma.TotalPresupuestado.Value);
+                db.SaveChanges();
+            }
+            else
+            {
+                municipalidad.Periodo = "";
+                municipalidad.TotalGastado = "$" + 0;
+                municipalidad.TotalPresupuestado = "$" + 0;
+                db.SaveChanges();
+            }
+            #endregion
 
             
-            var invisibles = db.Anos_Invisible.Where(r => r.IdMunicipalidad == municipalidad.IdMunicipalidad).ToList();
-            var visibles = db.Gasto_Ano_Visible.Where(r => r.IdMunicipalidad == municipalidad.IdMunicipalidad).ToList();
-            foreach (var item in visibles.ToList())
-            {
-                Anos_Invisible uno = new Anos_Invisible
-                {
-                    IdAno = item.IdAno,
-                    IdMunicipalidad = item.IdMunicipalidad,
-                    Nombre = item.Nombre
-                };
-                invisibles.Add(uno);
-            }
-            ViewBag.Anos = new SelectList(invisibles.OrderBy(r => r.Nombre), "IdAno", "Nombre");
+            return RedirectToAction("EliminarDatosOk");
+        }
+
+        public ActionResult EliminarDatosOk()
+        {
+            var municipalidad = GetCurrentIdMunicipality();
             ViewBag.logo = municipalidad.DireccionWeb + ".png";
             ViewBag.Destacado = "hidden";
             ViewBag.administracion = true;
-            return RedirectToAction("CargaDatos");
+            return View();
         }
-
-
         #region Ingresos
 
         public ActionResult CargaIngresos(int id)

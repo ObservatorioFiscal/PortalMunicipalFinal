@@ -13,8 +13,9 @@ namespace GastoTransparenteMunicipal.Controllers
             var municipalidad = GetCurrentIdMunicipality();
             if (municipalidad == null)
                 return RedirectToAction("List");
-
-            if(municipalidad != null)
+            if (string.IsNullOrEmpty(municipalidad.Periodo))
+                return RedirectToAction("List");
+            if (municipalidad != null)
             {
                 ViewBag.activos = new List<bool>
                 {
@@ -62,11 +63,50 @@ namespace GastoTransparenteMunicipal.Controllers
         public ActionResult List()
         {
             ViewBag.Destacado = "hidden";
-            ViewBag.administracion = true;
-            ViewBag.logo = "municipio.png";
+            var municipalidad = GetCurrentIdMunicipality();
+            if (this.User.Identity.IsAuthenticated)
+            {
+                ViewBag.administracion = true;
+                if (!this.User.IsInRole("admin"))
+                { 
+                    ViewBag.admimuni = true;
+                }
+            }
+            else
+            {
+                if (municipalidad != null)
+                {
+                    ViewBag.activos = new List<bool>
+                    {
+                        municipalidad.Act_Proveedor,municipalidad.Act_Subsidio,municipalidad.Act_Corporacion,municipalidad.Act_Personal
+                    };
+                    var municipios = db.Municipalidad.Where(r => r.IdMunicipalidad == municipalidad.IdMunicipalidad).ToList();
+                    ViewBag.logo = municipalidad.DireccionWeb + ".png";
+                    return View(municipios);
+                }
+                else
+                {
+                    ViewBag.activos = new List<bool>
+                    {
+                        false,false,false,false
+                    };
+                    var municipios = db.Municipalidad.Where(r => r.Activa == true).ToList();
+                    ViewBag.logo = "municipio.png";
+                    return View(municipios);
+                }
 
-            var municipios = db.Municipalidad.Where(r => r.Activa == true).ToList();
-            return View(municipios);
+            }
+
+            var listaMunicipios = db.Municipalidad.Where(r => r.Activa == true).ToList();
+            return View(listaMunicipios);
+
+
+
+
+
+
+
+
         }
 
         public ActionResult List2()

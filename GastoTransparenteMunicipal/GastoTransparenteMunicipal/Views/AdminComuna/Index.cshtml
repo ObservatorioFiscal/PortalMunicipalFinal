@@ -7,10 +7,13 @@
     <div class="row seccion-destado">
         <div class="col-md-12">
             <h1>
-                Bienvenido @this.User.Identity.Name
+                Bienvenido
                 <small>
-                    <span class="select">
+                    <span >
                         @this.User.Identity.Name
+                    </span>
+                    <span class="small">
+                        <a  style="text-decoration:underline;font-size:60%" href="@Url.Action("LogOff","Account")"> Cerrar sesión</a>
                     </span>
                 </small>
             </h1>
@@ -18,18 +21,56 @@
     </div>
     <div class="row padding-Div">
         <div class="col-md-12">
-            <h2>Informacion ya cargada.</h2>
+            <h2>Informacion del Municipio.</h2>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Periodo</th>
                         <th scope="col">Fecha Carga</th>
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in ViewBag.anoscargados)
                     {
-                        
+                    <tr>
+                        <td>
+                            @{
+                                string mes = item.Semestre.ToString();
+                            }
+                            @switch (mes)
+                            {
+                                case "1":
+                                    <span>a Marzo </span>
+                                    break;
+                                case "2":
+                                    <span>a Junio </span>
+                                    break;
+                                case "3":
+                                    <span>a Septiembre </span>
+                                    break;
+                            }
+                            @item.Ano
+                        </td>
+                        <td>@item.UpdatedOn</td>
+
+                        <td>
+                            @if (item.Activo)
+                            {
+                                <span>Activo</span>
+                            }
+                            else
+                            {
+                                <span>No Activo</span>
+                            }
+                        </td>
+                    </tr>
+                    }
+                    @if (ViewBag.anoscargados.Count < 1)
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center">No existen periodos abiertos ni cargados. <a class="btn btn-xs" href="@Url.Action("AbrirPeriodo","AdminComuna")">( +abrir nuevo año )</a></td>
+                        </tr>
                     }
                 </tbody>
             </table>
