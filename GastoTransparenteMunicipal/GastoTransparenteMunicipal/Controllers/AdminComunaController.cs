@@ -85,9 +85,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaDatos(int id)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             Gasto_Ano gasto = db.Gasto_Ano.Find(id);
 
@@ -444,6 +442,8 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult Eliminar(int ano, string pass)
         {
+            IncreaseTimeOutDb();
+
             var currentUser = User.Identity.Name;
             var controller = DependencyResolver.Current.GetService<AccountController>();
             controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller);
@@ -454,18 +454,10 @@ namespace GastoTransparenteMunicipal.Controllers
                 TempData[errorPassword] = "Contraseña incorrecta";
                 return RedirectToAction("Eliminar");
             }
-
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.SaveChanges();
-
+            
             Gasto_Ano gasto = db.Gasto_Ano.Find(ano);
 
-            Municipalidad municipalidad = db.Municipalidad.Find(gasto.IdMunicipalidad);
-
-            
-
-
+            Municipalidad municipalidad = db.Municipalidad.Find(gasto.IdMunicipalidad);            
 
             var gastos = db.Gasto_Ano.Where(r => r.Ano == gasto.Ano && r.IdMunicipalidad == gasto.IdMunicipalidad).FirstOrDefault();
             var ingresos = db.Ingreso_Ano.Where(r => r.Ano == gasto.Ano && r.IdMunicipalidad == gasto.IdMunicipalidad).FirstOrDefault();
@@ -566,11 +558,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaIngresos(int id,HttpPostedFileBase fileAdm, HttpPostedFileBase fileSalud, HttpPostedFileBase fileEducacion, HttpPostedFileBase fileCementerio)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
-
+            IncreaseTimeOutDb();
             if (fileAdm == null || fileSalud == null || fileEducacion == null)
             {
                 return View();
@@ -859,10 +847,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaGastos(int id,HttpPostedFileBase fileAdm, HttpPostedFileBase fileSalud, HttpPostedFileBase fileEducacion, HttpPostedFileBase fileCementerio)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             if (fileAdm == null || fileSalud == null || fileEducacion == null)
             {
@@ -1093,10 +1078,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaProveedores(int id,HttpPostedFileBase fileAdm, HttpPostedFileBase fileSalud, HttpPostedFileBase fileEducacion, HttpPostedFileBase fileCementerio)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             if (fileAdm == null || fileSalud == null || fileEducacion == null)
             {
@@ -1387,10 +1369,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaSubsidios(int id,HttpPostedFileBase file)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             if (file == null)
             {
@@ -1496,10 +1475,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaCorporaciones(int id,HttpPostedFileBase file)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             if (file == null)
             {
@@ -1706,10 +1682,7 @@ namespace GastoTransparenteMunicipal.Controllers
         [HttpPost]
         public ActionResult CargaRemuneraciones(int id, HttpPostedFileBase fileAdm, HttpPostedFileBase fileSalud, HttpPostedFileBase fileEducacion, HttpPostedFileBase fileCementerio)
         {
-            var timeout = db.Database.CommandTimeout;
-            db.Database.CommandTimeout = 2400;
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.SaveChanges();
+            IncreaseTimeOutDb();
 
             if (fileAdm == null || fileSalud == null || fileEducacion == null)
             {

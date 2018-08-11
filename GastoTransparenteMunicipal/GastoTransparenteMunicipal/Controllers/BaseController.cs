@@ -20,6 +20,13 @@ namespace GastoTransparenteMunicipal.Controllers
 
         public GastoTransparenteMunicipalEntities db = new GastoTransparenteMunicipalEntities();        
         
+        public void IncreaseTimeOutDb()
+        {
+            var timeout = db.Database.CommandTimeout;
+            this.db.Database.CommandTimeout = 2400;
+            this.db.SaveChanges();
+        }
+
         public string GetAccountKey
         {
             get
