@@ -18,5 +18,7 @@ namespace Core
         public Nullable<long> IdNivel2 { get; set; }
         public string Nombre { get; set; }
         public Nullable<long> Monto { get; set; }
+    
+        public virtual Subsidio_Nivel2 Subsidio_Nivel2 { get; set; }
     }
 }

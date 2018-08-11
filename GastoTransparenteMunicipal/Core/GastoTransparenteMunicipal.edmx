@@ -1178,6 +1178,18 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Subsidio___IdNiv__51EF2864">
+          <End Role="Subsidio_Nivel2" Type="Self.Subsidio_Nivel2" Multiplicity="0..1" />
+          <End Role="Subsidio_Nivel3" Type="Self.Subsidio_Nivel3" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsidio_Nivel2">
+              <PropertyRef Name="IdNivel2" />
+            </Principal>
+            <Dependent Role="Subsidio_Nivel3">
+              <PropertyRef Name="IdNivel2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="SP_DeleteCorporacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="IdAno" Type="bigint" Mode="In" />
         </Function>
@@ -1250,205 +1262,6 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
         </Function>
         <Function Name="SP_SumaGastoByIdAno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeGastoArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="int" Mode="In" />
-          <Parameter Name="NumeroDecimales" Type="int" Mode="In" />
-          <Parameter Name="IdGroupInformeGasto" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeGastoCuenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="int" Mode="In" />
-          <Parameter Name="NumeroDecimales" Type="int" Mode="In" />
-          <Parameter Name="IdGroupInformeGasto" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeIngresoArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="int" Mode="In" />
-          <Parameter Name="NumeroDecimales" Type="int" Mode="In" />
-          <Parameter Name="IdGroupInformeGasto" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeIngresoCuenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="int" Mode="In" />
-          <Parameter Name="NumeroDecimales" Type="int" Mode="In" />
-          <Parameter Name="IdGroupInformeGasto" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="SP_InformePersonalAdmNivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformePersonalCementerioNivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformePersonalEducacionNivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformePersonalSaludNivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeSubsidioNivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeSubsidio" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeSubsidioNivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeSubsidio" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_InformeSubsidioNivel3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeSubsidio" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_CalidadJuridica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_Estamento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_Grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_NivelAdm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_Profesion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_RangoAntiguedad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalAdm_RangoEtario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_CalidadJuridica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_Estamento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_Grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_NivelCementerio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_Profesion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_RangoAntiguedad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalCementerio_RangoEtario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_CalidadJuridica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_Estamento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_Grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_NivelEducacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_Profesion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_RangoAntiguedad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalEducacion_RangoEtario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_CalidadJuridica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_Estamento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_Grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_NivelSalud" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_Profesion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_RangoAntiguedad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_PersonalSalud_RangoEtario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformePersonal" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorAdm_Nivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorAdm_Nivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorCementerio_Nivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorCementerio_Nivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorEducacion_Nivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorEducacion_Nivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorSalud_Nivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorSalud_Nivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorTotal_Nivel1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="SP_ProveedorTotal_Nivel2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGroupInformeProveedores" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="IdAno" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="UpperFirstLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
-          <Parameter Name="string" Type="varchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="GastoTransparenteMunicipalModelStoreContainer">
           <EntitySet Name="Comunas" EntityType="Self.Comunas" Schema="dbo" store:Type="Tables" />
@@ -1706,319 +1519,16 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
             <End Role="Subsidio_Nivel1" EntitySet="Subsidio_Nivel1" />
             <End Role="Subsidio_Nivel2" EntitySet="Subsidio_Nivel2" />
           </AssociationSet>
+          <AssociationSet Name="FK__Subsidio___IdNiv__51EF2864" Association="Self.FK__Subsidio___IdNiv__51EF2864">
+            <End Role="Subsidio_Nivel2" EntitySet="Subsidio_Nivel2" />
+            <End Role="Subsidio_Nivel3" EntitySet="Subsidio_Nivel3" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GastoTransparenteMunicipalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GastoTransparenteMunicipalEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="SP_InformeCorporaciones">
-            <Parameter Name="IdGroupInforme" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeGasto">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeIngreso">
-            <Parameter Name="IdGroupReportIngreso" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalAdm">
-            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalCementerio">
-            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalEducacion">
-            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalMunicipioTotal">
-            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalSalud">
-            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeSubsidio">
-            <Parameter Name="IdGroupReportSubsidio" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorAdm">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorCementerio">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorEducacion">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorSalud">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorTotal">
-            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
-            <Parameter Name="IdAn" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SumaGastoByIdAno">
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_SumaGastoByIdAno" ReturnType="Collection(GastoTransparenteMunicipalModel.SP_SumaGastoByIdAno_Result)">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeleteCorporacion">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeleteGasto">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeleteIngreso">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeletePersonal">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeleteProveedor">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DeleteSubsidio">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeGastoArea">
-            <Parameter Name="IdAno" Mode="In" Type="Int32" />
-            <Parameter Name="NumeroDecimales" Mode="In" Type="Int32" />
-            <Parameter Name="IdGroupInformeGasto" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeGastoCuenta">
-            <Parameter Name="IdAno" Mode="In" Type="Int32" />
-            <Parameter Name="NumeroDecimales" Mode="In" Type="Int32" />
-            <Parameter Name="IdGroupInformeGasto" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeIngresoArea">
-            <Parameter Name="IdAno" Mode="In" Type="Int32" />
-            <Parameter Name="NumeroDecimales" Mode="In" Type="Int32" />
-            <Parameter Name="IdGroupInformeGasto" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeIngresoCuenta">
-            <Parameter Name="IdAno" Mode="In" Type="Int32" />
-            <Parameter Name="NumeroDecimales" Mode="In" Type="Int32" />
-            <Parameter Name="IdGroupInformeGasto" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalAdmNivel1">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalCementerioNivel1">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalEducacionNivel1">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalMunicipioTotalNivel1">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformePersonalSaludNivel1">
-          <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeSubsidioNivel1">
-            <Parameter Name="IdGroupInformeSubsidio" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeSubsidioNivel2">
-            <Parameter Name="IdGroupInformeSubsidio" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InformeSubsidioNivel3">
-            <Parameter Name="IdGroupInformeSubsidio" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_CalidadJuridica">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_Estamento">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_Grado">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_NivelAdm">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_Profesion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_RangoAntiguedad">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalAdm_RangoEtario">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_CalidadJuridica">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_Estamento">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_Grado">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_NivelCementerio">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_Profesion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_RangoAntiguedad">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalCementerio_RangoEtario">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_CalidadJuridica">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_Estamento">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_Grado">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_NivelEducacion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_Profesion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_RangoAntiguedad">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalEducacion_RangoEtario">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_CalidadJuridica">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_Estamento">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_Grado">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_NivelEducacion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_Profesion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_RangoAntiguedad">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalMunicipioTotal_RangoEtario">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_CalidadJuridica">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_Estamento">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_Grado">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_NivelSalud">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_Profesion">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_RangoAntiguedad">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PersonalSalud_RangoEtario">
-            <Parameter Name="IdGroupInformePersonal" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorAdm_Nivel1">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorAdm_Nivel2">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorCementerio_Nivel1">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorCementerio_Nivel2">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorEducacion_Nivel1">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorEducacion_Nivel2">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorSalud_Nivel1">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorSalud_Nivel2">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorTotal_Nivel1">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ProveedorTotal_Nivel2">
-            <Parameter Name="IdGroupInformeProveedores" Mode="In" Type="Guid" />
-            <Parameter Name="IdAno" Mode="In" Type="Int64" />
-          </FunctionImport>
           <EntitySet Name="Comunas" EntityType="GastoTransparenteMunicipalModel.Comunas" />
           <EntitySet Name="Corporacion_Ano" EntityType="GastoTransparenteMunicipalModel.Corporacion_Ano" />
           <EntitySet Name="Corporacion_Nivel1" EntityType="GastoTransparenteMunicipalModel.Corporacion_Nivel1" />
@@ -2232,13 +1742,84 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
             <End Role="Subsidio_Nivel1" EntitySet="Subsidio_Nivel1" />
             <End Role="Subsidio_Nivel2" EntitySet="Subsidio_Nivel2" />
           </AssociationSet>
-          </EntityContainer>
-        <ComplexType Name="SP_SumaGastoByIdAno_Result">
-          <Property Type="Int64" Name="TotalGastado" Nullable="true" />
-          <Property Type="Int64" Name="TotalPresupuestado" Nullable="true" />
-          <Property Type="Int64" Name="IdAno" Nullable="true" />
-          <Property Type="Int32" Name="IdMunicipalidad" Nullable="true" />
-        </ComplexType>
+          <AssociationSet Name="FK__Subsidio___IdNiv__51EF2864" Association="GastoTransparenteMunicipalModel.FK__Subsidio___IdNiv__51EF2864">
+            <End Role="Subsidio_Nivel2" EntitySet="Subsidio_Nivel2" />
+            <End Role="Subsidio_Nivel3" EntitySet="Subsidio_Nivel3" />
+          </AssociationSet>
+          <FunctionImport Name="SP_DeleteCorporacion">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteGasto">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteIngreso">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeletePersonal">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteProveedor">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteSubsidio">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformeCorporaciones">
+            <Parameter Name="IdGroupInforme" Mode="In" Type="Guid" />
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformeGasto">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformeIngreso">
+            <Parameter Name="IdGroupReportIngreso" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformePersonalAdm">
+            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformePersonalCementerio">
+            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformePersonalEducacion">
+            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformePersonalSalud">
+            <Parameter Name="IdGroupInformePersona" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InformeSubsidio">
+            <Parameter Name="IdGroupReportSubsidio" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ProveedorAdm">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ProveedorCementerio">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ProveedorEducacion">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ProveedorSalud">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ProveedorTotal">
+            <Parameter Name="IdGroupReportGasto" Mode="In" Type="Guid" />
+            <Parameter Name="IdAn" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SumaGastoByIdAno" ReturnType="Collection(GastoTransparenteMunicipalModel.SP_SumaGastoByIdAno_Result)">
+            <Parameter Name="IdAno" Mode="In" Type="Int64" />
+          </FunctionImport>
+        </EntityContainer>
         <EntityType Name="Comunas">
           <Key>
             <PropertyRef Name="IdComuna" />
@@ -2939,6 +2520,7 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
           <Property Name="IdAno" Type="Int64" />
           <NavigationProperty Name="Subsidio_Ano" Relationship="GastoTransparenteMunicipalModel.FK__Subsidio___IdAno__3A4CA8FD" FromRole="Subsidio_Nivel2" ToRole="Subsidio_Ano" />
           <NavigationProperty Name="Subsidio_Nivel1" Relationship="GastoTransparenteMunicipalModel.FK__Subsidio___IdNiv__3B40CD36" FromRole="Subsidio_Nivel2" ToRole="Subsidio_Nivel1" />
+          <NavigationProperty Name="Subsidio_Nivel3" Relationship="GastoTransparenteMunicipalModel.FK__Subsidio___IdNiv__51EF2864" FromRole="Subsidio_Nivel2" ToRole="Subsidio_Nivel3" />
         </EntityType>
         <EntityType Name="Subsidio_Nivel3">
           <Key>
@@ -2948,6 +2530,7 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
           <Property Name="IdNivel2" Type="Int64" />
           <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Monto" Type="Int64" />
+          <NavigationProperty Name="Subsidio_Nivel2" Relationship="GastoTransparenteMunicipalModel.FK__Subsidio___IdNiv__51EF2864" FromRole="Subsidio_Nivel3" ToRole="Subsidio_Nivel2" />
         </EntityType>
         <EntityType Name="SubsidioInforme">
           <Key>
@@ -3474,90 +3057,30 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Subsidio___IdNiv__51EF2864">
+          <End Type="GastoTransparenteMunicipalModel.Subsidio_Nivel2" Role="Subsidio_Nivel2" Multiplicity="0..1" />
+          <End Type="GastoTransparenteMunicipalModel.Subsidio_Nivel3" Role="Subsidio_Nivel3" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsidio_Nivel2">
+              <PropertyRef Name="IdNivel2" />
+            </Principal>
+            <Dependent Role="Subsidio_Nivel3">
+              <PropertyRef Name="IdNivel2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_SumaGastoByIdAno_Result">
+          <Property Type="Int64" Name="TotalGastado" Nullable="true" />
+          <Property Type="Int64" Name="TotalPresupuestado" Nullable="true" />
+          <Property Type="Int64" Name="IdAno" Nullable="true" />
+          <Property Type="Int32" Name="IdMunicipalidad" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GastoTransparenteMunicipalModelStoreContainer" CdmEntityContainer="GastoTransparenteMunicipalEntities">
-          <FunctionImportMapping FunctionImportName="SP_InformeCorporaciones" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeCorporaciones" />
-          <FunctionImportMapping FunctionImportName="SP_InformeGasto" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeGasto" />
-          <FunctionImportMapping FunctionImportName="SP_InformeIngreso" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeIngreso" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalAdm" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalAdm" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalCementerio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalCementerio" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalEducacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalEducacion" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalSalud" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalSalud" />
-          <FunctionImportMapping FunctionImportName="SP_InformeSubsidio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeSubsidio" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorAdm" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorAdm" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorCementerio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorCementerio" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorEducacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorEducacion" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorSalud" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorSalud" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorTotal" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorTotal" />
-          <FunctionImportMapping FunctionImportName="SP_SumaGastoByIdAno" FunctionName="GastoTransparenteMunicipalModel.Store.SP_SumaGastoByIdAno">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GastoTransparenteMunicipalModel.SP_SumaGastoByIdAno_Result">
-                <ScalarProperty Name="TotalGastado" ColumnName="TotalGastado" />
-                <ScalarProperty Name="TotalPresupuestado" ColumnName="TotalPresupuestado" />
-                <ScalarProperty Name="IdAno" ColumnName="IdAno" />
-                <ScalarProperty Name="IdMunicipalidad" ColumnName="IdMunicipalidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_DeleteCorporacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteCorporacion" />
-          <FunctionImportMapping FunctionImportName="SP_DeleteGasto" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteGasto" />
-          <FunctionImportMapping FunctionImportName="SP_DeleteIngreso" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteIngreso" />
-          <FunctionImportMapping FunctionImportName="SP_DeletePersonal" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeletePersonal" />
-          <FunctionImportMapping FunctionImportName="SP_DeleteProveedor" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteProveedor" />
-          <FunctionImportMapping FunctionImportName="SP_DeleteSubsidio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteSubsidio" />
-          <FunctionImportMapping FunctionImportName="SP_InformeGastoArea" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeGastoArea" />
-          <FunctionImportMapping FunctionImportName="SP_InformeGastoCuenta" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeGastoCuenta" />
-          <FunctionImportMapping FunctionImportName="SP_InformeIngresoArea" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeIngresoArea" />
-          <FunctionImportMapping FunctionImportName="SP_InformeIngresoCuenta" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeIngresoCuenta" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalAdmNivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalAdmNivel1" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalCementerioNivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalCementerioNivel1" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalEducacionNivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalEducacionNivel1" />
-          <FunctionImportMapping FunctionImportName="SP_InformePersonalSaludNivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalSaludNivel1" />
-          <FunctionImportMapping FunctionImportName="SP_InformeSubsidioNivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeSubsidioNivel1" />
-          <FunctionImportMapping FunctionImportName="SP_InformeSubsidioNivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeSubsidioNivel2" />
-          <FunctionImportMapping FunctionImportName="SP_InformeSubsidioNivel3" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeSubsidioNivel3" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_CalidadJuridica" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_CalidadJuridica" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_Estamento" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_Estamento" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_Grado" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_Grado" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_NivelAdm" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_NivelAdm" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_Profesion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_Profesion" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_RangoAntiguedad" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_RangoAntiguedad" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalAdm_RangoEtario" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalAdm_RangoEtario" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_CalidadJuridica" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_CalidadJuridica" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_Estamento" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_Estamento" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_Grado" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_Grado" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_NivelCementerio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_NivelCementerio" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_Profesion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_Profesion" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_RangoAntiguedad" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_RangoAntiguedad" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalCementerio_RangoEtario" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalCementerio_RangoEtario" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_CalidadJuridica" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_CalidadJuridica" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_Estamento" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_Estamento" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_Grado" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_Grado" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_NivelEducacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_NivelEducacion" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_Profesion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_Profesion" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_RangoAntiguedad" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_RangoAntiguedad" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalEducacion_RangoEtario" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalEducacion_RangoEtario" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_CalidadJuridica" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_CalidadJuridica" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_Estamento" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_Estamento" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_Grado" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_Grado" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_NivelSalud" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_NivelSalud" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_Profesion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_Profesion" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_RangoAntiguedad" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_RangoAntiguedad" />
-          <FunctionImportMapping FunctionImportName="SP_PersonalSalud_RangoEtario" FunctionName="GastoTransparenteMunicipalModel.Store.SP_PersonalSalud_RangoEtario" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorAdm_Nivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorAdm_Nivel1" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorAdm_Nivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorAdm_Nivel2" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorCementerio_Nivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorCementerio_Nivel1" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorCementerio_Nivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorCementerio_Nivel2" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorEducacion_Nivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorEducacion_Nivel1" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorEducacion_Nivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorEducacion_Nivel2" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorSalud_Nivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorSalud_Nivel1" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorSalud_Nivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorSalud_Nivel2" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorTotal_Nivel1" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorTotal_Nivel1" />
-          <FunctionImportMapping FunctionImportName="SP_ProveedorTotal_Nivel2" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorTotal_Nivel2" />
           <EntitySetMapping Name="Comunas">
             <EntityTypeMapping TypeName="GastoTransparenteMunicipalModel.Comunas">
               <MappingFragment StoreEntitySet="Comunas">
@@ -4322,7 +3845,36 @@ advertencia 6002: La tabla o vista 'GastoTransparenteMunicipal.dbo.Subsidio_Ano_
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="SP_DeleteCorporacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteCorporacion" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteGasto" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteGasto" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteIngreso" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteIngreso" />
+          <FunctionImportMapping FunctionImportName="SP_DeletePersonal" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeletePersonal" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteProveedor" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteProveedor" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteSubsidio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_DeleteSubsidio" />
+          <FunctionImportMapping FunctionImportName="SP_InformeCorporaciones" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeCorporaciones" />
+          <FunctionImportMapping FunctionImportName="SP_InformeGasto" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeGasto" />
+          <FunctionImportMapping FunctionImportName="SP_InformeIngreso" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeIngreso" />
+          <FunctionImportMapping FunctionImportName="SP_InformePersonalAdm" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalAdm" />
+          <FunctionImportMapping FunctionImportName="SP_InformePersonalCementerio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalCementerio" />
+          <FunctionImportMapping FunctionImportName="SP_InformePersonalEducacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalEducacion" />
+          <FunctionImportMapping FunctionImportName="SP_InformePersonalSalud" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformePersonalSalud" />
+          <FunctionImportMapping FunctionImportName="SP_InformeSubsidio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_InformeSubsidio" />
+          <FunctionImportMapping FunctionImportName="SP_ProveedorAdm" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorAdm" />
+          <FunctionImportMapping FunctionImportName="SP_ProveedorCementerio" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorCementerio" />
+          <FunctionImportMapping FunctionImportName="SP_ProveedorEducacion" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorEducacion" />
+          <FunctionImportMapping FunctionImportName="SP_ProveedorSalud" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorSalud" />
+          <FunctionImportMapping FunctionImportName="SP_ProveedorTotal" FunctionName="GastoTransparenteMunicipalModel.Store.SP_ProveedorTotal" />
+          <FunctionImportMapping FunctionImportName="SP_SumaGastoByIdAno" FunctionName="GastoTransparenteMunicipalModel.Store.SP_SumaGastoByIdAno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GastoTransparenteMunicipalModel.SP_SumaGastoByIdAno_Result">
+                <ScalarProperty Name="TotalGastado" ColumnName="TotalGastado" />
+                <ScalarProperty Name="TotalPresupuestado" ColumnName="TotalPresupuestado" />
+                <ScalarProperty Name="IdAno" ColumnName="IdAno" />
+                <ScalarProperty Name="IdMunicipalidad" ColumnName="IdMunicipalidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

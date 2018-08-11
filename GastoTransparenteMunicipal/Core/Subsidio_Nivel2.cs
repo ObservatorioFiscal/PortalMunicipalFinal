@@ -14,6 +14,12 @@ namespace Core
     
     public partial class Subsidio_Nivel2
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Subsidio_Nivel2()
+        {
+            this.Subsidio_Nivel3 = new HashSet<Subsidio_Nivel3>();
+        }
+    
         public long IdNivel2 { get; set; }
         public Nullable<long> IdNivel1 { get; set; }
         public string Nombre { get; set; }
@@ -22,5 +28,7 @@ namespace Core
     
         public virtual Subsidio_Ano Subsidio_Ano { get; set; }
         public virtual Subsidio_Nivel1 Subsidio_Nivel1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Subsidio_Nivel3> Subsidio_Nivel3 { get; set; }
     }
 }
