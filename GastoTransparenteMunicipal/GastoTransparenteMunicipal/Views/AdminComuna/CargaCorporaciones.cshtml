@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Carga Corporaciones";
+}
+
+
+<div class="container">
+    <div class="row seccion-destado">
+        @if (ViewBag.aviso)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    Esta informacion ya se encuentra cargada, si la vuelve a cargar se reemplaza la anterior.
+                </div>
+            </div>
+        }
+
+        <div class="col-md-12">
+            <h1>
+                Carga de Corporaciones año
+                <span class="muntotal">
+                    @ViewBag.ano
+                </span>
+                <br />
+                <br />
+            </h1>
+        </div>
+        <div class="col-md-12">
+            <form action="@Url.Action("CargaCorporaciones","AdminComuna")" id="formulario" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="id" value="@ViewBag.id" />
+                <h4 class="inline">
+                    <img src="~/Content/image/mal.png" id="error" style="display:none" alt="archivo correcto" />
+                    <img src="~/Content/image/bien.png" id="success" style="display:none" alt="archivo con errores" />
+                    Municipio Total &nbsp;&nbsp;&nbsp;
+                </h4>
+                <p class="inline">
+                    <small>
+                        <input type="file" accept=".xls,.xlsx" id="file" name="file" />
+                        <input type="hidden" id="fileStatus" />        
+                        <label id="messagefileStatus" />
+                    </small>
+                </p>
+                <hr />
+                <input type="submit" class="btn" id="boton" value="Confirmar subida de Información" disabled>
+            </form>
+        </div>
+    </div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+</div>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {
+
+        $("#file").on("change", function () {
+            upload('@Url.Action("ValidadorCargaCorporaciones", "AdminComuna")', 'file', 'fileStatus')
+        });       
+
+        //SI TODOS LOS HIDDEN
+
+        $("#boton").on("click",function () {
+            //si todos los type hidden en true, realiza el submit():
+            if (1 == 1) {
+                document.getElementById('formulario').submit();
+            }
+        });
+
+        function upload(urlPath, name, result) {
+            var isValid = undefined;
+            var formData = new FormData();
+            var file = document.getElementById(name).files[0];
+            formData.append(name, file);
+            $.ajax({
+                type: 'post',
+                url: urlPath,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#" + result).val(response.isValid);
+                    $("#message" + result).text(response.message);
+                    checkSingleStatus(name, response.isValid);
+                    checkAllStatus();
+                }
+            });
+        }
+
+        function checkAllStatus() {
+            var isValid = $('#fileStatus').val();
+    
+            if (isValid == "true") {
+                $('#boton').prop("disabled", false);
+            } else {
+                $('#boton').prop("disabled", true);
+            }
+            
+        }
+
+        function checkSingleStatus(item, result) {
+            if (item == "file") {
+                if (result == true) {
+                    $('#success').css("display", "inline");
+                    $('#error').css("display", "none");
+                }
+                else {
+                    $('#success').css("display", "none");
+                    $('#error').css("display", "inline");
+                }
+            }         
+        }
+    });
+    </script>
+}

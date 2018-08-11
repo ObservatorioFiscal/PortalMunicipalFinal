@@ -1,0 +1,126 @@
+﻿.numero1 {
+    font-size: 20px;
+    margin-top: 5px;
+    position: relative;
+}
+    .numero1 .numero3 {
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        padding: 0px 10px;
+        border-right: 1px solid #193659;
+        border-left: 1px solid #193659;
+        border-bottom: 1px solid #193659;
+    }
+    .numero1 .numero3 p {
+        margin-bottom: -1rem;
+    }
+
+.flecha {
+    color: white;
+    font-size: 31px;
+}
+
+.seleccionadomiga {
+    border-bottom: 4px solid #F1C330 !important;
+}
+
+.migapan {
+    padding: 5px;
+    display: inline-block;
+}
+
+.cadamiga {
+    cursor: pointer;
+    display: inline-block;
+}
+
+    .cadamiga:hover .contenmiga {
+        background-color: #F1C330;
+        color: red;
+    }
+
+        .cadamiga:hover .contenmiga span {
+            color: white;
+        }
+
+    .cadamiga:hover .flecha {
+        border-left: 24px solid #F1C330;
+    }
+
+    .cadamiga .contenmiga {
+        background-color: rgb(245, 249, 255);
+        display: inline-block;
+        float: left;
+        height: 44px;
+        border-bottom: 4px solid transparent;
+    }
+
+    .cadamiga .flecha2 {
+        color: white;
+        width: 0;
+        height: 0;
+        border-top: 24px solid transparent;
+        border-left: 24px solid white;
+        display: inline-block;
+        vertical-align: middle;
+        border-bottom: 20px solid transparent;
+    }
+
+    .cadamiga .flecha {
+        color: white;
+        width: 0px;
+        height: 0;
+        border-top: 24px solid transparent;
+        border-left: 24px solid rgb(245, 249, 255);
+        display: inline-block;
+        border-bottom: 20px solid transparent;
+        margin: 0;
+        padding: 0;
+        float: left;
+    }
+
+    .cadamiga .flechContenido {
+        display: inline-block;
+        padding: 0px 20px;
+        vertical-align: middle;
+    }
+
+        .cadamiga .flechContenido span {
+            color: #34495C
+        }
+
+.node {
+    position: absolute;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+    flex-direction: column;
+    color: #ffffff;
+    font-size: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s linear;
+}
+
+    .node:hover {
+        background-color: #F1C330 !important;
+        color: rgb(13, 43, 80);
+    }
+    .node h5{
+        padding:10px;
+    }
+
+.seleccionc {
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+    color: #314b6a;
+    font-weight: 400;
+    font-size: 22px;
+}
+
+.seleccioncambio {
+    color: #F1C330;
+    border-bottom: 4px solid #F1C330 !important;
+}
+

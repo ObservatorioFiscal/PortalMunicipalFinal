@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "CargaDiccionarioIngresos";
+}
+
+<h2>CargaGlosaGastos</h2>
+
+<div class="col-md-12">
+    <form action="@Url.Action("CargaDiccionarioIngresos","AdminComuna")" id="formulario" method="post" enctype="multipart/form-data">
+        <label>
+            <span></span>
+            Adm. y Serv. Municipales
+            <input type="file" accept=".xls,.xlsx" id="file" name="file" />
+            <input type="hidden" />
+        </label><br />
+        <input type="submit" class="btn" id="boton" value="Confirmar subida de Informacion">
+    </form>
+</div>

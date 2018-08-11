@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+    <title>@ViewBag.Title - @ViewBag.logo</title>
+      @*<link href="~/Content/css/bootstrap-grid.css"   rel="stylesheet" />
+        <link href="~/Content/css/bootstrap-reboot.css" rel="stylesheet" />
+        <link href="~/Content/css/font.css"             rel="stylesheet" />
+        <link href="~/Content/css/styleBootrap.css"     rel="stylesheet" />
+        <link href="~/Content/css/style.css"            rel="stylesheet" />
+        <link href="~/Content/css/styleSueldos.css"     rel="stylesheet" />
+        <link href="~/Content/css/tinyscrollbar.css"    rel="stylesheet" />
+        <link href="~/Content/css/styleTreemap.css"     rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.css" />*@
+    <link href="~/Content/css/styleconsolidado.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col barra-superior">
+                <div class="row" id="barra-primera">
+                    <div class="col">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-5 align-self-center">
+                                    <div class="row">
+                                        <div class="padding-cero col-10 col-sm-10 col-md-12 align-self-center">
+                                            <div class="row">
+                                                <span class="col-7 align-self-center">
+                                                    <a href="@Url.Action("Index","Home")">
+                                                        <img class="logo-top img-fluid" src="~/Content/image/municipios/@ViewBag.logo" alt="Cuentas Claras Municipales" />
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 col-sm-2 col-md-0 align-self-center ">
+                                            <a id="menu-mobile">
+                                                <span class="md-24 icon-menu"></span>
+                                            </a>
+                                        </div>
+                                        <div class="col-12 hidden" id="menu-mobile-contenido">
+                                            <hr>
+                                            <nav>
+                                                <ul style="padding: 0;">
+                                                    @if (ViewBag.administracion != true)
+                                                    {
+                                                        <li class="nav-item"><a href="@Url.Action("Index","Home")" class="@ViewBag.Inicio"> Inicio </a></li>
+                                                        <li class="nav-item"><a href="@Url.Action("Index", "Ingresos")" class="@ViewBag.Ingreso">Ingresos </a></li>
+                                                        <li class="nav-item"><a href="@Url.Action("Index","Gastos")" class="@ViewBag.Gasto">Gastos </a></li>
+
+                                                        if (ViewBag.activos[0] || ViewBag.activos[1] || ViewBag.activos[2] || ViewBag.activos[3])
+                                                        {
+                                                            <li class="nav-item">
+                                                                Datos destacado
+                                                                <ul>
+                                                                    @if (ViewBag.activos[0])
+                                                                    {
+                                                                        <li class="nav-item"><a class="@ViewBag.Proveedores" href="@Url.Action("Proveedores", "DatosDestacados")">Proveedores </a></li>
+                                                                    }
+                                                                    @if (ViewBag.activos[1])
+                                                                    {
+                                                                        <li class="nav-item"><a class="@ViewBag.Subsidios" href="@Url.Action("Subsidios", "DatosDestacados")">Subsidios </a></li>
+                                                                    }
+                                                                    @if (ViewBag.activos[2])
+                                                                    {
+                                                                        <li class="nav-item"><a class="@ViewBag.Corporaciones" href="@Url.Action("Corporaciones", "DatosDestacados")">Corporaciones </a></li>
+                                                                    }
+                                                                    @if (ViewBag.activos[3])
+                                                                    {
+                                                                        <li class="nav-item"><a class="@ViewBag.Sueldos" href="@Url.Action("Sueldos", "DatosDestacados")">Remuneraciones </a></li>
+                                                                    }
+                                                                </ul>
+                                                            </li>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (this.User.Identity.IsAuthenticated)
+                                                        {
+
+                                                            if (ViewBag.admimuni == true)
+                                                            {
+                                                                <li class="nav-item"><a href="@Url.Action("Index","AdminComuna")" class="@ViewBag.Inicio">Home</a></li>
+                                                                <li class="nav-item"><a href="@Url.Action("CargaDatos","AdminComuna")" class="@ViewBag.Inicio">Carga Datos</a></li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="nav-item"><a href="@Url.Action("Index","Admin")" class="@ViewBag.Inicio">Home</a></li>
+                                                                <li class="nav-item"><a href="@Url.Action("Municipio", "Admin")" class="@ViewBag.Ingreso">Editar Municipios</a></li>
+                                                                <li class="nav-item"><a href="@Url.Action("CreateAccount","Admin")" class="@ViewBag.Gasto">Agregar Usuarios</a></li>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-0 col-sm-0 col-md-7 padding-cero align-self-end" id="menu-Principal">
+                                    <nav class="">
+                                        <ul class="nav nav-resp align-items-center">
+                                            @if (ViewBag.administracion != true)
+                                            {
+                                                <li class="nav-item borde-menu">
+                                                    <a class="nav-link @ViewBag.Inicio" href="@Url.Action("Index","Home")">Inicio</a>
+                                                </li>
+                                                <li class="nav-item borde-menu">
+                                                    <a class="nav-link @ViewBag.Ingreso" href="@Url.Action("Index","Ingresos")">Ingresos</a>
+                                                </li>
+                                                <li class="nav-item borde-menu">
+                                                    <a class="nav-link @ViewBag.Gasto" href="@Url.Action("Index","Gastos")">Gastos</a>
+                                                </li>
+
+                                                if (ViewBag.activos[0] || ViewBag.activos[1] || ViewBag.activos[2] || ViewBag.activos[3])
+                                                {
+                                                    <li class="nav-item destacado">
+                                                        <a class="nav-link" href="#">
+                                                            Datos<br> destacados <span class="md-12 icon-Recurso-20 menuflecha"></span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (this.User.Identity.IsAuthenticated)
+                                                {
+                                                    if (ViewBag.admimuni == true)
+                                                    {
+                                                    <li class="nav-item"><a href="@Url.Action("Index", "AdminComuna")" class="nav-link">Home</a></li>
+                                                    <li class="nav-item"><a href="@Url.Action("CargaDatos", "AdminComuna")" class="nav-link">Carga Datos</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="nav-item"><a href="@Url.Action("Index", "Admin")" class="nav-link">Home</a></li>
+                                                        <li class="nav-item"><a href="@Url.Action("Municipio", "Admin")" class="nav-link">Editar Municipios</a></li>
+                                                        <li class="nav-item"><a href="@Url.Action("CreateAccount", "Admin")" class="nav-link">Agregar Usuarios</a></li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if(ViewBag.administracion != true) { 
+                    if (ViewBag.activos[0] || ViewBag.activos[1] || ViewBag.activos[2] || ViewBag.activos[3])
+                    {
+                        <div class="row @ViewBag.Destacado destacado destacadocolor" id="destacado-barra">
+                            <div class="col">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-3 col-0 padding-cero">
+                                            <ul class="nav justify-content-start align-items-center">
+                                                <li class="nav-item menu-auxiliar">
+                                                    <a href="@Url.Action("Index", "Home")">
+                                                        <img class="nav-link nav-link-sub img-fluid" src="~/Content/image/municipios/@ViewBag.logo" alt="Cuentas Claras Municipales" />
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-9 col-12 padding-cero">
+                                            <ul class="nav justify-content-end align-items-center">
+                                                <li class="nav-item menu-auxiliar">
+                                                    <a class="nav-link nav-link-sub"><b class="amarillo">DATOS DESTACADOS</b></a>
+                                                </li>
+                                                @if (ViewBag.activos[0])
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-sub @ViewBag.Proveedores" href="@Url.Action("Proveedores", "DatosDestacados")">Proveedores</a>
+                                                    </li>
+                                                }
+                                                @if (ViewBag.activos[1])
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-sub @ViewBag.Subsidios" href="@Url.Action("Subsidios", "DatosDestacados")">Subsidios</a>
+                                                    </li>
+                                                }
+                                                @if (ViewBag.activos[2])
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-sub @ViewBag.Corporaciones" href="@Url.Action("Corporaciones", "DatosDestacados")">Corporaciones</a>
+                                                    </li>
+                                                }
+                                                @if (ViewBag.activos[3])
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-sub @ViewBag.Sueldos" href="@Url.Action("Sueldos", "DatosDestacados")">Remuneraciones</a>
+                                                    </li>
+                                                }
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                </div>
+        </div>
+
+        @RenderBody()
+
+        <footer class="row">
+            <div class="col padding-Div azulB">
+                <div class="container">
+                    <div class="row">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <div class="col-12">
+                                <p class="text-center">Bienvenido @this.User.Identity.Name <a class="blanco" style="text-decoration:underline" href="@Url.Action("LogOff","Account")"> Cerrar sesión</a></p>
+                            </div>
+                        }
+                        <div class="col-12">
+                            <p><br /><br /></p>
+                        </div>
+                        <div class="col-3">
+                            <p><b>Portal Cuentas Claras Municipales</b></p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-center"><b>Una iniciativa conjunta de:</b></p>
+                        </div>
+                        <div class="col-3">
+                            <p></p>
+                        </div>
+                        <div class="col-md-3 align-self-center">
+                            <ul class="small">
+                                <li class="blanco"><a href="@Url.Action("Index","Home")" class="@ViewBag.Inicio">Inicio</a></li>
+                                <li class="blanco"><a href="@Url.Action("Index","Ingresos")" class="@ViewBag.Ingresos">Ingresos</a></li>
+                                <li class="blanco"><a href="@Url.Action("Index","Gastos")" class="@ViewBag.Gastos">Gastos</a></li>
+                                @if (ViewBag.administracion != true)
+                                {
+                                    if (ViewBag.activos[0])
+                                    {
+                                        <li class="blanco"><a href="@Url.Action("Proveedores", "DatosDestacados")" class="@ViewBag.Proveedores">Proveedores</a></li>
+                                    }
+                                    if (ViewBag.activos[1])
+                                    {
+                                        <li class="blanco"><a href="@Url.Action("Sueldos", "DatosDestacados")" class="@ViewBag.Sueldo">Remuneraciones</a></li>
+                                    }
+                                    if (ViewBag.activos[2])
+                                    {
+                                        <li class="blanco"><a href="@Url.Action("Corporaciones", "DatosDestacados")" class="@ViewBag.Corporaciones">Corporaciones</a></li>
+                                    }
+                                    if (ViewBag.activos[3])
+                                    {
+                                        <li class="blanco"><a href="@Url.Action("Subsidios", "DatosDestacados")" class="@ViewBag.Subsidios">Subsidios</a></li>
+                                    }
+                                }
+                                </ul>
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <div class="row">
+                                <div class="col-12">
+                                </div>
+                                <div class="col-md-8">
+                                    <img src="~/Content/image/iniciativa.png" class="img-fluid" usemap="#iniciativa" />
+                                    <map name="iniciativa">
+                                        <area shape="rect" coords="1,1,200,56" alt=" Observatorio del Gasto Fiscal en Chile" href="https://observatoriofiscal.cl/" />
+                                        <area shape="rect" coords="200,1,380,56" alt="Consejo para la Transparencia" href="https://www.consejotransparencia.cl/" />
+                                    </map>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="">
+                                        <img class="text-center img-fluid" src="~/Content/image/municipiosblanco/@ViewBag.logo" alt="Municipalidad">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 align-self-center">
+                            <p>
+                                contacto@cuentasclaras.de<br /><br />
+                                <a href="@Url.Action("About","Home")" class="blanco">El Proyecto</a><br />
+                                Condiciones<br />
+                                           <small class="small">Esta obra está bajo una Licencia Creative Commons Atribución 4.0 Internacional.</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <br /><br />
+                            <p class="text-center"><small> Desarrollado por <a class="amarillo" href="https://observatoriofiscal.cl/" target="_blank">Observatorio del Gasto Fiscal en chile</a> y <a class="amarillo" href="https://www.consejotransparencia.cl/" target="_blank">Consejo para la transparencia</a>.</small> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 25) {
+                    $(".logo-top").css("padding", "5px 0 0 0")
+                    $(".menu-auxiliar").css("opacity", "1")
+                    var URLactual = window.location.pathname;
+                    if (URLactual.includes("DatosDestacados")) {
+                        $("#barra-primera").css("height", "0")
+                        $("#barra-primera").css("opacity", "0")
+                    }
+                }
+                if ($(this).scrollTop() < 25) {
+                    $(".logo-top").css("padding", "15px 0")
+                    $(".menu-auxiliar").css("opacity", "0")
+                    var URLactual = window.location.pathname;
+                    if (URLactual.includes("DatosDestacados")) {
+                        $("#barra-primera").css("height", "auto")
+                        $("#barra-primera").css("opacity", "1")
+                    }
+                }
+            });
+            
+            $("#menu-mobile").click(
+                function () {
+                    if ($("#menu-mobile-contenido").hasClass("hidden")) {
+                        $("#menu-mobile-contenido").removeClass("hidden");
+                    }
+                    else {
+                        $("#menu-mobile-contenido").addClass("hidden");
+                    }
+                }
+            );
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "Subsidios";
+}
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Subsidios
+                        <small>
+                            de
+                            <span class="muntotal">Municipio Total</span>
+                        </small>
+
+                        <small>
+                            del año:
+                            <span class="select ">
+                                @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "ano" })
+                            </span>
+                        </small>
+                    </h1>
+                    <p>En esta sección podrás enterarte de las organizaciones de la comuna que han recibido subvenciones por parte del municipios, en el marco de lo estipulado en la ley 19.862.</p>
+                </div>
+            </div>
+
+            <div class="row padding-Div-top">
+                <div class="col-md-12">
+                    <h2>Subsidios según tipo de organizaciones</h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="row" id="container">
+                        <div class="col-md-6 align-self-center" id="chart"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 align-self-center" id="lateralPanel"></div>
+                    </div>
+                </div>
+                <div id="tooltip" class="tooltiptremap">
+                    <div class="caja">
+                        <div class='titulo'>
+                            <h5><b id="clasificacion"></b></h5>
+                        </div>
+                        <div class='descripcion'>
+                            <p>Monto:</p>
+                            <h5 id="monto"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*LISTADO DE SUBSIDIOS*@
+            <div class="row padding-Div">
+                <div class="col-md-12">
+                    <h2>Buscar Beneficiarios</h2>
+                    <p>Cuál es el beneficiario que buscar, utiliza nuestro buscador para saber si recibió recursos municipales:<br></p>
+                </div>
+                <div class="col-md-12">
+                    <input id="buscaSubsidio" onchange="filter(this.value)" onkeyup="filter(this.value)" type="text" class="form-control" placeholder="Ingrese el nombre de Organizacion.">
+                </div>
+                <div class="col-12">
+                    <div class="row celda">
+                    </div>
+                    <div id="tabla" class="row muntotal celda">
+                        <div class="col-8"><h6><b>Organización                   <a id="busquedaNombre" onclick="orden(1)"><span class="md-24 gris icon-sortasc"></span></a></b></h6></div>
+                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortasc"></span></a></b></h6></div>
+                    </div>
+
+                    <div id="scrollbar1">
+                        <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                        <div class="viewport">
+                            <div class="overview" id="listapapa">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><small>*La información presentada en la seccion es subida y presentada exclusivamente por el municipio.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p class="text-right">
+
+                            Compartir:
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="DescargaDataset('subsidios')" class="btn btn-xs">Descarga Dataset</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script src="~/Scripts/FeaturedData/SubsidyBubbleChart.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tinyscrollbar/2.4.2/jquery.tinyscrollbar.min.js"></script>
+    <script>
+
+        function orden(aux) {
+            var seleccionado;
+            var otro;
+            if (aux == 1) {
+                seleccionado = "busquedaNombre";
+                otro = "busquedaMonto";
+            } else {
+                seleccionado = "busquedaMonto";
+                otro = "busquedaNombre";
+            }
+            if ($("#"+seleccionado).children('span').hasClass('gris')) {
+                $("#" + seleccionado).html('<span class="md-24 icon-sortasc"></span>')
+                llenarTabla(aux+1);
+                $("#" + otro).children('span').addClass('gris')
+            }
+            else {
+                if ($("#" +seleccionado).children('span').hasClass('icon-sortdesc')) {
+                    $("#" +seleccionado).html('<span class="md-24 icon-sortasc"></span>')
+                    llenarTabla(aux+1);
+                }
+                else {
+                    $("#" +seleccionado).html('<span class="md-24 icon-sortdesc"></span>')
+                    llenarTabla(aux);
+                }
+            }
+        }
+
+
+        function filter(element) {
+            var text = element.toUpperCase();
+            console.log(text);
+            var listapapa = $("#listapapa")[0];
+            if (text != "") {
+                for (i = 0; i < listapapa.children.length; i++) {
+                    var hijo = listapapa.children[i];
+                    var hijotext = hijo.children[0].outerText.toUpperCase();
+                    if (!hijotext.includes(text)) {
+                        hijo.hidden = true;
+                    }
+                    else {
+                        hijo.hidden = false;
+                    }
+                }
+                var $scrollbar5 = $("#scrollbar1");
+                $scrollbar5.tinyscrollbar();
+                var scrollbar5 = $scrollbar5.data("plugin_tinyscrollbar")
+                scrollbar5.update();
+            }
+            else {
+                for (i = 0; i < listapapa.children.length; i++) {
+                    var hijo = listapapa.children[i];
+                    hijo.hidden = false;
+                }
+            }
+        }
+        function llenarCirculos(diameter) {
+            var diameterWidth = Math.round($(window).width() * (1 / 2));
+            var diameterHeigth = diameterWidth * (2 / 3);
+            $.ajax({
+                cache: false,
+                async: false,
+                type: 'POST',
+                data: {
+                    year: $("#ano").val()
+                },
+                url: '@Url.Action("SubsidyAjaxNivel1", "FeaturedData")',
+                dataType: 'json',
+                success: function (result) {
+                    $("#chart").empty();
+                    $("#lateralPanel").empty();
+                    drawChart(result, diameterWidth, diameterHeigth);
+                }
+            });
+        }
+
+        function llenarTabla(orden) {
+            //$("#listapapa").remove();
+            $.ajax({
+                cache: false,
+                async: false,
+                type: 'POST',
+                data: {
+                    year: $("#ano").val(),
+                    orden: orden
+                },
+                url: '@Url.Action("SubsidyChartNivel2", "FeaturedData")',
+                dataType: 'json',
+                success: function (data) {
+                    $("#listapapa").empty();
+                    $.each(data, function (index, item) {
+                        $("#listapapa").append(nuevoPapa(item));
+                    });
+                    $('#scrollbar1').tinyscrollbar();
+                }
+            });
+        };
+
+        function verDetalle(aux) {
+            if ($("#item-" + aux).children('.col-9').children('span').hasClass("icon-Recurso6")) {
+                $(".icon-Recurso6").addClass("icon-Recurso5").removeClass("icon-Recurso6");
+                $(".celda").removeClass("destacadocolor");
+                $(".hijotabla").remove();
+            }
+            else {
+                $(".celda").removeClass("destacadocolor");
+                $("#item-" + aux).addClass("destacadocolor");
+                $(".icon-Recurso6").addClass("icon-Recurso5").removeClass("icon-Recurso6");
+                $("#item-" + aux).children('.col-9').children('span').removeClass("icon-Recurso5").addClass("icon-Recurso6");
+                $(".hijotabla").remove();
+                $.ajax({
+                    cache: false,
+                    async: false,
+                    type: 'POST',
+                    data: {
+                        IdNivel2: aux
+                    },
+                    url: '@Url.Action("SubsidyChartNivel3", "FeaturedData")',
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#item-" + aux).append(nuevoHijoHeader(aux));
+                        $.each(data, function (index, item) {
+                            $("#table-" + aux).append(nuevoHijo(item));
+                        });
+                    }
+                });
+            }
+        }
+
+        function nuevoPapa(item) {
+            return '\
+                <div class="row celda"  onclick="verDetalle('+ item.IdNivel2 + ')" id="item-'+ item.IdNivel2 +'">\
+                    <div class="col-9"><span class="md-24 muntotal icon-Recurso5"> </span>' + item.Nombre + '<small>(' + item.Categoria+')</small></div>\
+                    <div class="col-3 alineacion">$'+ item.Monto.toLocaleString() +'</div>\
+                </div>\
+                ';
+        }
+
+        function nuevoHijoHeader(aux) {
+            return '\
+                    <div class="col-12 hijotabla">\
+                        <div class="row">\
+                            <table class="table">\
+                                <thead>\
+                                    <tr>\
+                                        <th>Fecha Decreto</th>\
+                                        <th>Beneficiario</th>\
+                                        <th>Monto</th>\
+                                    </tr>\
+                                </thead>\
+                                <tbody id="table-'+aux+'">\
+                                </tbody>\
+                            </table>\
+                        </div>\
+                    </div>\
+                    ';
+        }
+        function nuevoHijo(item) {
+            return '\
+                    <tr>\
+                        <td> 19/04/2016 </td>\
+                        <td> '+ item.Nombre +' </td>\
+                        <td> $'+ item.Monto.toLocaleString() +' </td>\
+                    </tr>\
+                    ';
+        }
+
+
+        $(document).ready(function () {
+            $("select").resizeselect();
+            llenarCirculos();
+            llenarTabla(0);
+        });
+    </script>
+}

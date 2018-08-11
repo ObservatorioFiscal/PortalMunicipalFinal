@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "CargaDatos";
+}
+
+<div class="container">
+    <div class="row seccion-destado">
+
+        <div class="col-md-12">
+            <h1>
+                Carga de información año
+                <small>
+                    del año:
+                    <span class="select">
+                        @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "Anos" })
+                    </span>
+                </small>
+                <small style="font-size:30%">
+                    <a href="@Url.Action("AbrirPeriodo","AdminComuna")">( +abrir nuevo año )</a>
+                </small>
+            </h1>
+        </div>
+        <div class="col-md-12">
+            <h2>Ingresos <small id="ingreso" class="paneladmin"></small></h2>
+            <h2>Gastos <small id="gasto" class="paneladmin"></small></h2>
+            <input type="hidden" id="dat0" value="@ViewBag.activos[0]" />
+            <input type="hidden" id="dat1" value="@ViewBag.activos[1]" />
+            <input type="hidden" id="dat2" value="@ViewBag.activos[2]" />
+            <input type="hidden" id="dat3" value="@ViewBag.activos[3]" />
+
+            @if (ViewBag.activos[0])
+            {
+                <h2><span>Proveedores</span> <small id="proveedor" class="paneladmin"></small></h2>
+            }
+            @if (ViewBag.activos[1])
+            {
+                <h2><span>Subsidios</span> <small id="subsidio" class="paneladmin"></small></h2>
+            }
+            @if (ViewBag.activos[2])
+            {
+                <h2><span>Corporaciones</span> <small id="corporacion" class="paneladmin"></small></h2>
+            }
+            @if (ViewBag.activos[3])
+            {
+                <h2><span>Remuneraciones</span> <small id="remuneracion" class="paneladmin"></small></h2>
+            }
+            <form action="@Url.Action("CargaDatos","AdminComuna")" id="formulario" method="post" enctype="multipart/form-data">
+                <h2 class="text-right">
+                    <input type="hidden" name="id" id="anopost" />
+                    <span class="cssToolTip"><span class="md-24 icon-Recurso-help amarillo"></span><span class="oculto" style="font-size:12px">Primero tienes que tener cargada la información. Para que se active el boton. Si tienes otro periodo cargado  de este año, se eliminara automaticamente.</span></span>
+                    <button type="submit" class="btn btn-primary blanco" id="aceptarFinal" disabled="disabled">Activar Periodo</button>
+                    <a href="@Url.Action("Eliminar","AdminComuna")" class="btn btn-transparente btn-xs"><small>Elimina periodos</small></a>
+                </h2>
+            </form>
+        </div>
+    </div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div">
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/select.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("select").resizeselect();
+            $("#anopost").val($("#Anos").val());
+            Verdisponibilidad();
+
+            $("#Anos").change(function () {
+                Verdisponibilidad();
+                $("#anopost").val($("#Anos").val());
+            });
+
+        });
+
+        function Verdisponibilidad() {
+            
+            if ($("#Anos").val() != null) {
+                var suma = 2, contador = 0;
+                var aaa = $("#dat0").val();
+                if ($("#dat0").val() == "value") {
+                    suma = suma + 1;
+                }
+                if ($("#dat1").val() == "value") {
+                    suma = suma + 1;
+                }
+                if ($("#dat2").val() == "value") {
+                    suma = suma + 1;
+                }
+                if ($("#dat3").val() == "value") {
+                    suma = suma + 1;
+                }
+                $.ajax({
+                    cache: false,
+                    async: false,
+                    type: 'POST',
+                    data: {
+                        aux: $("#Anos").val()
+                    },
+                    url: '../AdminComuna/CargadosPost',
+                    dataType: 'json',
+                    success: function (data) {
+                        var URLactual = window.location.pathname;
+                        var tabla = URLactual.split('/')
+                        var ano = $("#Anos").val();
+                        //if (!data[0]) {
+                        //    $("#ingreso").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaIngresos/"+ano+"'>Cargar información</a>");
+                        //} else {
+                        //    contador = contador + 1;
+                        //    $("#ingreso").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaIngresos/" + ano +"'>Recargar información</a>");
+                        //}
+                        //if (!data[1]) {
+                        //    $("#gasto").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaGastos/" + ano +"'>Cargar información</a>");
+                        //} else {
+                        //    contador = contador + 1;
+                        //    $("#gasto").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaGastos/" + ano +"'>Recargar información</a>");
+                        //}
+                        //if (!data[2]) {
+                        //    $("#proveedor").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaProveedores/" + ano +"'>Cargar información</a>");
+                        //} else {
+                        //    contador = contador + 1;
+                        //    $("#proveedor").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaProveedores/" + ano +"'>Recargar información</a>");
+                        //}
+                        //if (!data[3]) {
+                        //    $("#subsidio").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaSubsidios/" + ano +"'>Cargar información</a>");
+                        //} else {
+                        //    contador = contador + 1;
+                        //    $("#subsidio").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaSubsidios/" + ano +"'>Recargar información</a>");
+                        //}
+                        //if (!data[4]) {
+                        //    $("#corporacion").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaCorporaciones/" + ano +"'>Cargar información</a>");;
+                        //} else {
+                        //    contador = contador+1;
+                        //    $("#corporacion").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaCorporaciones/" + ano +"'>Recargar información</a>");
+                        //}
+                        //if (!data[5]) {
+                        //    $("#remuneracion").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaRemuneraciones/" + ano +"'>Cargar información</a>");
+                        //} else {
+                        //    contador = contador + 1;
+                        //    $("#remuneracion").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/><a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaRemuneraciones/" + ano +"'>Recargar información</a>");
+                        //}
+                        if (!data[0]) {
+                            $("#ingreso").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaIngresos/" + ano + "'>Cargar información</a>");
+                        } else {
+                            contador = contador + 1;
+                            $("#ingreso").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (!data[1]) {
+                            $("#gasto").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaGastos/" + ano + "'>Cargar información</a>");
+                        } else {
+                            contador = contador + 1;
+                            $("#gasto").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (!data[2]) {
+                            $("#proveedor").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaProveedores/" + ano + "'>Cargar información</a>");
+                        } else {
+                            contador = contador + 1;
+                            $("#proveedor").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (!data[3]) {
+                            $("#subsidio").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaSubsidios/" + ano + "'>Cargar información</a>");
+                        } else {
+                            contador = contador + 1;
+                            $("#subsidio").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (!data[4]) {
+                            $("#corporacion").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaCorporaciones/" + ano + "'>Cargar información</a>");;
+                        } else {
+                            contador = contador + 1;
+                            $("#corporacion").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (!data[5]) {
+                            $("#remuneracion").html("<a href='../../../" + tabla[1] + '/' + tabla[2] + "/CargaRemuneraciones/" + ano + "'>Cargar información</a>");
+                        } else {
+                            contador = contador + 1;
+                            $("#remuneracion").html("<img src='../../../Content/image/bien.png' class='subimg' alt='archivo con errores'/>");
+                        }
+                        if (contador == suma) {
+                            $("#aceptarFinal").removeAttr("disabled")
+                        }
+
+                    },
+                    error: function (msg) {
+                        $('#btnagendar').attr('disabled', false);
+                    }
+                });
+            }
+        }
+        
+    </script>
+}
+

@@ -1,0 +1,419 @@
+﻿@using Core;
+@{ 
+    ViewBag.Title = "Proveedores";
+}
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Proveedores
+                        <small>
+                            de
+                            <span class="select">
+                                <select id="origenData">
+                                    <option value="@OrigenData.MunicipioTotal">Municipio Total</option>
+                                    <option value="@OrigenData.Adm">Adm. y Serv. Municipales</option>
+                                    <option value="@OrigenData.Salud">Salud</option>
+                                    <option value="@OrigenData.Educacion">Educación</option>
+                                    @if (ViewBag.cementerio)
+                                    {
+                                        <option value="@OrigenData.Cementerio">Cementerio</option>
+                                    }
+                                </select>
+                            </span>
+                        </small>
+
+                        <small>
+                            del año:
+                            <span class="select">
+                                @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "ano" })
+                            </span>
+                        </small>
+                    </h1>
+                    <p>En esta sección sabrás cuales son los principales proveedores que le venden bienes o le prestan servicios al municipio. </p>
+                </div>
+            </div>
+
+            <div class="row padding-Div">
+                <div class="col-md-12" id="chartdiv">
+                    <h2>Los proveedores más importantes</h2>
+                    <p>En esta gráfica podrás observar los top 20 proveedores que más le venden al municipio, en términos de montos transados.</p>
+                    <div id="chart" class="muntotal"></div>
+                </div>
+            </div>
+
+            <div class="row padding-Div">
+                <div class="col-md-12">
+                    <h2>Buscar Proveedores</h2>
+                    <p>Si deseas revisar detalles de las transacciones del municipio con un proveedor específico, búscalo indicando su nombre o razón social de la empresa.<br>
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <input id="buscaProveedor" onkeyup="filter(this.value)" type="text" class="form-control" placeholder="Ingrese el nombre del proveedor">
+                </div>
+                <div class="col-12">
+                    <div class="row celda">
+                    </div>
+                    <div id="tabla" class="row muntotal celda">
+                        <div class="col-8"><h6><b>Proveedor                   <a id="busquedaNombre" onclick="orden(1)"><span class="md-24 gris icon-sortasc"></span></a></b></h6></div>
+                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortasc"></span></a></b></h6></div>
+                    </div>
+
+                    <div id="scrollbar1">
+                        <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                        <div class="viewport">
+                            <div class="overview" id="listapapa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><small>*La información presentada en la seccion es subida y presentada exclusivamente por el municipio.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p class="text-right">
+
+                            Compartir:
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="DescargaDataset('proveedores')" class="btn btn-xs">Descarga Dataset</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="tooltip" class="tooltiptremap" style="transition:opacity 0.4s linear;">
+    <div class="caja">
+        <div class="titulo">
+            <h5><b id="classNombre"></b></h5>
+        </div>
+        <div class="descripcion">
+            <p>Monto:</p>
+            <h5 id="valueTooltip1"></h5>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tinyscrollbar/2.4.2/jquery.tinyscrollbar.min.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script src="~/Scripts/FeaturedData/WordCloud.js"></script>
+
+    <script type="text/javascript">
+
+        function orden(aux) {
+            var seleccionado;
+            var otro;
+            if (aux == 1) {
+                seleccionado = "busquedaNombre";
+                otro = "busquedaMonto";
+            } else {
+                seleccionado = "busquedaMonto";
+                otro = "busquedaNombre";
+            }
+            if ($("#" + seleccionado).children('span').hasClass('gris')) {
+                $("#" + seleccionado).html('<span class="md-24 icon-sortasc"></span>')
+                llenarTabla(aux + 1);
+                $("#" + otro).children('span').addClass('gris')
+            }
+            else {
+                if ($("#" + seleccionado).children('span').hasClass('icon-sortdesc')) {
+                    $("#" + seleccionado).html('<span class="md-24 icon-sortasc"></span>')
+                    llenarTabla(aux + 1);
+                }
+                else {
+                    $("#" + seleccionado).html('<span class="md-24 icon-sortdesc"></span>')
+                    llenarTabla(aux);
+                }
+            }
+        }
+
+    function filter(element) {
+        var text = element.toUpperCase();
+        console.log(text);
+        var listapapa = $("#listapapa")[0];
+        if (text != "") {
+            for (i = 0; i < listapapa.children.length; i++) {
+                var hijo = listapapa.children[i];
+                var hijotext = hijo.children[0].outerText.toUpperCase();
+                if (!hijotext.includes(text)) {
+                    hijo.hidden = true;
+                }
+                else {
+                    hijo.hidden = false;
+                }
+            }
+            var $scrollbar5 = $("#scrollbar1");
+            $scrollbar5.tinyscrollbar();
+            var scrollbar5 = $scrollbar5.data("plugin_tinyscrollbar")
+            scrollbar5.update();
+        }
+        else {
+            for (i = 0; i < listapapa.children.length; i++) {
+                var hijo = listapapa.children[i];
+                hijo.hidden = false;
+            }
+        }
+    }
+
+
+    function clearAll() {
+        $("#chart").html('');
+        $("#listapapa").html('');
+        $("#hijotabla").remove();
+    }
+
+    function drawChart() {
+        var url = "@Url.Action("Providers", "FeaturedData")";
+        $.ajax({
+            type: 'POST',
+            data: {
+                year: $("#ano").val(),
+                origenData: $("#origenData").val()
+            },
+            url: url,
+            dataType: 'json',
+            success: function (result) {
+                drawWordCloud(result.monto, result.proveedor);
+            }
+        });
+    }
+    function llenarTabla(orden) {
+        //$("#listapapa").remove();
+        $.ajax({
+            cache: false,
+            async: false,
+            type: 'POST',
+            data: {
+                year: $("#ano").val(),
+                origenData: $("#origenData").val(),
+                orden: orden
+            },
+            url: '@Url.Action("ProvidersTable", "FeaturedData")',
+
+            dataType: 'json',
+            success: function (data) {
+                var auxiliar;
+                switch ($("#origenData").val()) {
+                    case "1": auxiliar = "admmunicipal"; break;
+                    case "2": auxiliar = "salud"; break;
+                    case "3": auxiliar = "educacion"; break;
+                    case "4": auxiliar = "cementerio"; break;
+                    case "5": auxiliar = "muntotal"; break;
+                }
+                $("#listapapa").empty();
+                $.each(data, function (index, item) {
+                    $("#listapapa").append(nuevoPapa(item, auxiliar));
+                });
+                $('#scrollbar1').tinyscrollbar();
+            }
+        });
+    };
+
+        function verDetalle(aux) {
+            if ($("#item-" + aux).children('.col-8').children('span').hasClass("icon-Recurso6")) {
+                $(".icon-Recurso6").addClass("icon-Recurso5").removeClass("icon-Recurso6");
+                $(".celda").removeClass("destacadocolor");
+                $(".hijotabla").remove();
+            }
+            else {
+                $(".celda").removeClass("destacadocolor");
+                $("#item-" + aux).addClass("destacadocolor");
+                $(".icon-Recurso6").addClass("icon-Recurso5").removeClass("icon-Recurso6");
+                $("#item-" + aux).children('.col-8').children('span').removeClass("icon-Recurso5").addClass("icon-Recurso6");
+
+                $(".hijotabla").remove();
+                $.ajax({
+                    cache: false,
+                    async: false,
+                    type: 'POST',
+                    data: {
+                        idNivel1: aux,
+                        origenData: $("#origenData").val()
+                    },
+                    url: '@Url.Action("ProvidersDetalle", "FeaturedData")',
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#item-" + aux).append(nuevoHijoHeader(aux));
+                        $.each(data, function (index, item) {
+                            $("#table-" + aux).append(nuevoHijo(item));
+                        });
+                    }
+                });
+            }
+
+    };
+
+        function nuevoPapa(item, aux) {
+            return '\
+            <div class="row celda" onclick="verDetalle('+ item.IdNivel1 + ')" id="item-'+ item.IdNivel1 + '">\
+                <div class="col-8"> <span class="md-24 '+ aux +' icon-Recurso5"> </span> ' + item.Nombre + '</div>\
+                <div class="col-4 alineacion">$'+ item.Monto.toLocaleString() + '</div>\
+            </div>\
+            ';
+        }
+        function nuevoHijoHeader(aux) {
+            return '\
+                    <div class="col-12 hijotabla" id="hijotabla" >\
+                        <div class="row">\
+                            <table class="table">\
+                                <thead>\
+                                    <tr>\
+                                        <th>Proveedor</th>\
+                                        <th>OC - Glosa</th>\
+                                        <th>Area</th>\
+                                        <th>Monto</th>\
+                                    </tr>\
+                                </thead>\
+                                <tbody id="table-'+ aux + '">\
+                                </tbody>\
+                            </table>\
+                        </div>\
+                    </div>\
+                    ';
+        }
+        function nuevoHijo(item) {
+            return '\
+                    <tr>\
+                        <td> '+ item.Nombre + ' </td>\
+                        <td> '+ item.Glosa + ' </td>\
+                        <td> '+ item.Area + ' </td>\
+                        <td> $'+ item.Monto.toLocaleString() + ' </td>\
+                    </tr>\
+                    ';
+        }
+
+        function drawWordCloud(monto,proveedor) {
+
+        var array_montos = monto;
+        var array_texto = proveedor;
+        var word_count = {};
+        for (i = 0; i < array_montos.length; i++) {
+            word_count[array_texto[i]] = Math.round(array_montos[i]/1);
+        }
+
+        var svg_location = "#chart";
+        var width = $("#chartdiv").width();
+        var height = width/3;
+
+        var fill = d3.scale.category20();
+        var word_entries = d3.entries(word_count);
+
+        var xScale = d3.scale.linear()
+            .domain([0, d3.max(word_entries, function (d) {
+                return d.value;
+            })
+            ])
+            .range([10, 100]);
+        d3.layout.cloud().size([width, height])
+            .timeInterval(20)
+            .words(word_entries)
+            .fontSize(function (d) { return xScale(+d.value); })
+            .text(function (d) { return d.key; })
+            .rotate(function () { return 0; })
+            .font("Roboto")
+            .on("end", draw)
+            .start();
+
+        function draw(words) {
+            d3.select(svg_location).append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function (d) { return xScale(d.value) + "px"; })
+                .style("font-family", "Roboto")
+                .style("font-weight", "500")
+                .style("cursor", "pointer")
+                .attr("text-anchor", "middle")
+                .attr("id", function (d) { return d.key.replace(/ /g, ''); })
+                .attr("monto", function (d) { return d.value.toLocaleString(); })
+                .attr("onmouseover", "mouseover_text(event)")
+                .attr("onmousemove", "mousemove_text(event)")
+                .attr("onmouseout", "mouseout_text(event)")
+                .attr("onclick", function (d) {
+                    return "selectText('"+ d.key +"')";
+                })
+                .attr("transform", function (d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + 0 + ")";
+                })
+                .text(function (d) { return  d.key; });
+        }
+
+        d3.layout.cloud().stop();
+        }
+
+        function selectText(text) {
+            $("#buscaProveedor").val('');
+            $("#buscaProveedor").val(text);
+            filter(text);
+        }
+
+        function mouseover_text(event) {
+            var tooltip = d3.select("#tooltip");
+            document.getElementById("classNombre").innerHTML = event.toElement.innerHTML;
+            document.getElementById("valueTooltip1").innerHTML = "$ " + event.srcElement.attributes.monto.nodeValue;
+            tooltip.style("opacity", "1")
+           
+            tooltip.style("left", (event.pageX + 20) + "px");
+            tooltip.style("top", (event.pageY - 110) + "px");
+
+            //var id = event.srcElement.id;
+            //var texts = document.getElementsByClassName("normal-text");
+            //for (i = 0; i < texts.length; i++) {
+            //    if (texts[i].id != id) {
+            //        texts[i].classList.add("change-color");
+            //    }
+            //}
+        }
+
+        function mousemove_text(event) {
+            mouseout_text(event);
+            mouseover_text(event);
+        }
+
+        function mouseout_text(event) {
+            var tooltip = d3.select("#tooltip");
+            tooltip.style("opacity", "0")
+            var circles = document.getElementsByClassName("normal-text");
+            for (i = 0; i < circles.length; i++) {
+                circles[i].classList.remove("change-color");
+            }
+        }
+
+        $(document).ready(function () {
+            $("select").resizeselect();
+            drawChart();
+            llenarTabla(0);
+
+            $("#ano").change(function () {
+                clearAll();
+                drawChart();
+                llenarTabla(0);
+            });
+            $("#origenData").change(function () {
+                $("#ano")
+                clearAll();
+                drawChart();
+                llenarTabla(0);
+            });
+        });
+    </script>
+
+
+}

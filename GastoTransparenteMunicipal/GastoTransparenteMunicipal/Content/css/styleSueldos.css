@@ -1,0 +1,42 @@
+.padres{
+	padding:0;
+	cursor:pointer;
+}
+.padres:hover{
+	background-color:#f5f9ff;
+}
+
+.hijos{
+	padding-top: 15px;
+	padding-bottom:15px;
+}
+
+.hijos-primero {
+    padding-top: 65px;
+}
+
+.borde {
+    border-radius: 5px;
+    background-color: #f5f9ff;
+    height: 100%;
+    max-height: 540px;
+    overflow-y: scroll;
+}
+
+.borde-papa {
+    background-color: #f5f9ff;
+    border-radius: 5px;
+}
+@media (min-width: 576px) {
+    .borde-papa {
+        border-radius: 5px 0 0 5px;
+    }
+
+    .padres {
+        padding: 1rem 1rem;
+    }
+
+    .no-papa {
+        color: #a0a0a0;
+    }
+}

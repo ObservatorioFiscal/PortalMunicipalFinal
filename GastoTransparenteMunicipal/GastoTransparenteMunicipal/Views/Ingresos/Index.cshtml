@@ -1,0 +1,419 @@
+﻿
+@{
+    ViewBag.Title = "Ingresos";
+}
+
+
+
+<input type="hidden" id="IDPAPA" name="IDPAPA" value="0" />
+<input type="hidden" id="NOMBREPAPA" name="NOMBREPAPA" value="" />
+<input type="hidden" id="FUNCECONO" name="FUNCECONO" value="" />
+<input type="hidden" id="NIVEL" name="NIVEL" value="1" />
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Ingresos
+                        <small>
+                            del
+                            <span class="muntotal">Municipio Total</span>
+                        </small>
+
+                        <small>
+                            del año:
+                            <span class="select">
+                                @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "ano" })
+                            </span>
+                        </small>
+                    </h1>
+                </div>
+            </div>
+            <div id="Bienvenida" class="row padding-Div text-center">
+                <div class="col-md-12">
+                    <h4>Elige un punto de partida</h4>
+                    <p>¿Cómo quieres empezar revisando la información de los ingresos? Puedes seleccionar una perspectiva por área (hacia dónde se ingresaron los recursos), o por cuenta presupuestaria (fuentes de donde provienen). Una vez al interior de una categoría, puedes ir cruzando las vistas, para ir explorando las cuentas de ingresos para cada área, o viceversa.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="cubo">
+                        <h3>¿Dónde ingresaron los <br />recursos?</h3>
+                        <p>Revisa la distribución de los ingresos entre las distintas áreas del Municipio: Educación, Salud, Adm. y Servicios Municipales, y Cementerios.</p>
+                        <p>
+                            <br />
+                            <a href="#" onclick="dibujar(1); return false;" class="btn">Área</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cubo">
+                        <h3>¿De qué fuentes provienen los recursos?</h3>
+                        <p>Explora las fuentes que financian las distintas áreas del Municipio: Aportes del Gobierno, Fondo Común Municipal, Patentes, Contribuciones, Permisos de Circulación, entre otras.</p>
+                        <p>
+                            <br />
+                            <a href="#" onclick="dibujar(0); return false;" class="btn">Cuentas</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Grafico" class="hidden row padding-Div">
+                <div class="col-md-12">
+                    <div id="miga">
+                    </div>
+
+                    <p class="text-right margin-cero">
+                        Ver detalle por:
+                        <span id="cuuuu" class="seleccionc seleccioncambio" onclick="cambio('CUENTA');return false;"> Cuenta </span> /
+                        <span id="arrrr" class="seleccionc" onclick="cambio('AREA');return false;"> Area </span>
+                    </p>
+                    <div id="chart_div" style="min-height:400px;" oncontextmenu="return false;"></div>
+                    <div class="numero1">
+                        <div class="numero3">
+                            <p class='text-center'>
+                                <span id="Titulo" style='background-color:white;padding:0px 5px'>
+                                </span>
+                            </p>   @*Ingresos <span> (15.000 millones)</span>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row padding-Div"></div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p><small>*La información presentada en la seccion es subida y presentada exclusivamente por el municipio.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p class="text-right">
+
+                            Compartir:
+                            <a  onclick="redesclick('facebook')" class="md-24 icon-twitter"></a>
+                            <a onclick="redesclick('twitter')" class="md-24 icon-facebook"></a>
+                            <a onclick="DescargaDataset('ingresos')" class="btn btn-xs">Descarga Dataset</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tooltip" class="tooltiptremap" style="transition:opacity 0.4s linear;">
+    <div class="caja">
+        <div class="titulo">
+            <h5><b id="classNombre"></b></h5>
+        </div>
+        <div class="descripcion">
+            <p>Ingresado:</p>
+            <h5 id="valueTooltip1"></h5>
+            <p><small id="porcentaje1"></small></p>
+            <p><br>Presupuestado:</p>
+            <h5 id="valueTooltip2"></h5>
+            <p><small id="porcentaje2"></small><br><br></p>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script>
+        var idpapa = "0";
+        var ID = "0";
+        var nombretipo = "";
+        var VALUEX = 0;
+        var className = "Ingresos";
+        var nivel = 1;
+        var width = 0;
+        function classes(data) {
+            var classes = [];
+            var colores = [
+                "rgba(13,43,80,1)",
+                "rgba(13,43,80,0.95)",
+                "rgba(13,43,80,0.90)",
+                "rgba(13,43,80,0.85)",
+                "rgba(13,43,80,0.80)",
+                "rgba(13,43,80,0.75)",
+                "rgba(13,43,80,0.70)",
+                "rgba(13,43,80,0.65)",
+                "rgba(13,43,80,0.60)"]
+            var i = 0;
+            function recurse(name, node) {
+                if (node.children) node.children.forEach(function (child) {
+                    recurse(node.name, child, null);
+                });
+                else {
+                    i++;
+                    if (i > 7){
+                        i = 7;
+                    }
+                    classes.push({
+                        packageName: name,
+                        className: node.name,
+                        fondo: colores[i],
+                        value: node.size,
+                        tipo: node.tipo,
+                        valueTooltip1: node.valueTooltip1,
+                        valueTooltip2: node.valueTooltip2,
+                        porcentaje1: node.porcentaje1,
+                        porcentaje2: node.porcentaje2,
+                        descripcion: node.descripcion,
+                        id:node.id
+                    });
+                }
+            }
+            recurse(null, data);
+            return {
+                children: classes
+            };
+            }
+        function drawChart(aux)
+        {
+            VALUEX = 0;
+            var IDANO = $("#ano").val();
+            var IDPAPA = $("#IDPAPA").val();
+            var FUNCECONO = $("#FUNCECONO").val();
+            var margin = { top: 10, right: 10, bottom: 10, left: 10 };
+            if (width == 0) {
+                width = $(".container").width();
+            }
+            var height = width / 3;
+            var treemap;
+            if (width < 750) {
+                height = 400;
+                treemap = d3.layout.treemap().size([width, height]).sticky(true).mode("squarify").ratio(1).round(true).sort(function (a, b) { return a.value - b.value; }).value(function (d) { return d.value; });
+            }
+            else {
+                treemap = d3.layout.treemap().size([width, height]).sticky(true).mode("squarify").ratio(5).round(true).sort(function (a, b) { return a.value - b.value; }).value(function (d) { return d.value; });
+            }
+            var div = d3.select("body").select("#chart_div").append("div").attr("id", "treeChart").style("position", "relative").style("height", (height + margin.top + margin.bottom) + "px").style("top", margin.top + "px");
+            var tooltip = d3.select(".tooltiptremap");
+            var url = "@Url.Action("JsonIngresoNivelX", "Ingresos")" + "?tipo=" + FUNCECONO + "&idNivel=" + nivel + "&profundidad=" + IDPAPA + "&year=" + IDANO ;
+            d3.json(url, function (error, data) {
+                var Format = data.Format;
+                VALUEX = data.TotalSuma;
+                var Formato;
+                var node = div.selectAll(".node")
+                    .data(treemap.nodes(classes(data, null)))
+                    .enter().append("div")
+                    .attr("class", "node")
+                    .attr("Id", function (d) {
+                        return d.id;
+                    })
+                    .call(position)
+                    .style("background", function (d) {
+                        Formato = d.tipo;
+                        return d.fondo;
+                    })
+                    .on("mouseover", function (d) {
+                        
+                        document.getElementById("classNombre").innerHTML=d.className;
+                        document.getElementById("valueTooltip1").innerHTML ="$" + d.valueTooltip1 + " millones";
+                        document.getElementById("porcentaje1").innerHTML ="Equivale al " + d.porcentaje1 + "% del Ingreso Municipal.";
+                        document.getElementById("valueTooltip2").innerHTML ="$" + d.valueTooltip2 + " millones";
+                        document.getElementById("porcentaje2").innerHTML = "Equivale al " + d.porcentaje2 + "% del Ingreso Municipal.";
+                        tooltip.style("opacity", "1")
+                    })
+                    .on("mousemove", function (d) {
+                        tooltip.style("top", function (d) {
+                            if (d3.event.pageY > 500) {
+                                return (d3.event.pageY - 260) + "px"
+                            }
+                            else {
+                                return (d3.event.pageY - 10) + "px"
+                            }
+                        });
+                        tooltip.style("left", function (d) {
+                            //var eee = d.position;
+
+
+                            if (d3.event.pageX > 300) {
+                                return (d3.event.pageX - 300) + "px"
+                            }
+                            else {
+                                return (d3.event.pageX - 10) + "px"
+                            }
+                        });
+                    })
+                    .on("mouseout", function () {
+                        tooltip.style("opacity", "0");
+                        return 1;
+                    })
+                    .on("click", function (d) {
+                        nivel = document.getElementById("NIVEL").value;
+                        if (nivel < "4") {
+                            tooltip.style("opacity", "0");
+                            idpapa = document.getElementById("IDPAPA").value;
+                            nombretipo = document.getElementById("FUNCECONO").value;
+
+                            nivel = parseInt(nivel) + 1;
+                            className = d.className;
+                            ID = d.id;
+                            document.getElementById("NIVEL").value = nivel;
+                            document.getElementById("NOMBREPAPA").value = d.className;
+                            document.getElementById("IDPAPA").value = d.id;
+                            drawChart(0);
+                            document.getElementById("treeChart").remove();
+                        };
+                    })
+                node.html(function (d) {
+                    if (d.className != null) {
+                        var largo = d.className.length;
+                        var x = d.dx, y = d.dy;
+                        if (((largo * 8) + 20) > x) {
+                            if (((y - 20) / 45) > 1 && ((largo * 8) + 20) < (x * 2)) {
+                                return "<h5 style='font-size:1em'><b>" + d.className + "</b><small><br>$" + puntos(d.value) + " millones</small></h5>"
+                            }
+                            return "";
+                        } else if (((largo * 11.5) + 20) < x) {
+                            if (((y - 20) / 70) > 1) {
+                                return "<h5 style='font-size:1.5em'><b>" + d.className + "</b><small><br>$" + puntos(d.value) + " millones</small></h5>"
+                            }
+                            return "<h5 style='font-size:1.5em'><b>" + d.className + "</b></h5>"
+                        } else if (((largo * 9.5) + 20) < x) {
+                            if (((y - 20) / 55) > 1) {
+                                return "<h5 style='font-size:1.2em'><b>" + d.className + "</b><small><br>$" + puntos(d.value) + " millones</small></h5>"
+                            }
+                            return "<h5 style='font-size:1.2em'><b>" + d.className + "</b></h5>"
+                        } else if (((y - 20) / 45) > 1) {
+                            return "<h5 style='font-size:1em'><b>" + d.className + "</b></h5>"
+                        }
+                         
+                    }
+                    return "";
+                });
+                $("#cuuuu").text("");
+                $("#arrrr").text("");
+                switch (Format) {
+                    case "1 ":
+                        if (Formato == "CUENTA") {
+                            $("#cuuuu").text("Cuenta");
+                        }
+                        else {
+                            $("#arrrr").text("Area");
+                        }
+                        break;
+                    case "0 ":
+                        $("#cuuuu").text("Cuenta");
+                        $("#arrrr").text("Area");
+                        break;
+                    case "3 ":
+                        if (Formato == "CUENTA") {
+                            $("#cuuuu").text("Cuenta");
+                        }
+                        else {
+                            $("#arrrr").text("Area");
+                        }
+                        break;
+                }
+                if (aux == 0) {
+                    var stringgg = document.getElementById("miga").innerHTML;
+                    stringgg = stringgg.replace("seleccionadomiga", "")
+
+                    document.getElementById("miga").innerHTML = stringgg + '<div class="cadamiga" id="miga' + nivel + '"><a onclick="devolver(' + nivel + ',' + ID + ',\'' + FUNCECONO + '\',' + VALUEX + ',\'' + className + '\')">  <div class="contenmiga seleccionadomiga"><div class="flecha2"></div><div class="flechContenido"><span>' + className + '</span></div></div><div class="flecha"></div></a></div>';
+                }
+                if (Formato == "CUENTA") {
+                    $("#cuuuu").removeClass("seleccioncambio");
+                    $("#arrrr").removeClass("seleccioncambio");
+                    $("#cuuuu").addClass("seleccioncambio");
+                }
+                else {
+                    $("#cuuuu").removeClass("seleccioncambio");
+                    $("#arrrr").removeClass("seleccioncambio");
+                    $("#arrrr").addClass("seleccioncambio");
+                }
+                document.getElementById("FUNCECONO").value = Formato;
+                document.getElementById("Titulo").innerHTML =  className + " ( $" + puntos(VALUEX) + " millones )";
+
+            });
+        function position() {
+            this.style("left", function (d) { return d.x + "px"; })
+                .style("top", function (d) { return d.y + "px"; })
+                .style("width", function (d) { return Math.max(0, d.dx - 1) + "px"; })
+                .style("height", function (d) { return Math.max(0, d.dy - 1) + "px"; });
+        }
+    }
+    function devolver(nivell, Idpapa, funci, valor, nombre) {
+        $("#miga" + nivell).find(".contenmiga").addClass("seleccionadomiga");
+        var i = nivell + 1;
+        for (i; i < 5; i++) {
+            $("#miga"+i).remove();
+        }
+        document.getElementById("NIVEL").value = (nivell);
+        nivel = nivell;
+        className = nombre;
+        document.getElementById("NOMBREPAPA").value = nombre;
+        document.getElementById("treeChart").remove();
+        document.getElementById("IDPAPA").value = Idpapa;
+        document.getElementById("FUNCECONO").value = funci;
+        drawChart(1);
+    }
+
+    function cambio(aux) {
+        $("#FUNCECONO").val(aux);
+        document.getElementById("treeChart").remove();
+        drawChart(1);
+        if (aux == "CUENTA") {
+            $("#cuuuu").removeClass("seleccioncambio");
+            $("#arrrr").removeClass("seleccioncambio");
+            $("#cuuuu").addClass("seleccioncambio");
+        }
+        else {
+            $("#cuuuu").removeClass("seleccioncambio");
+            $("#arrrr").removeClass("seleccioncambio");
+            $("#arrrr").addClass("seleccioncambio");
+
+        }
+    }
+
+    $(document).ready(function () {
+        $("select").resizeselect();
+        $(".destacado").hover(
+            function () {
+                $(".destacado").css("background-color", "#f5f9ff");
+                $("#destacado-barra").removeClass("hidden");
+                $(".borde-menu").css("border-bottom", "1px solid");
+
+            }, function () {
+                $(".destacado").css("background-color", "#ffffff");
+                $("#destacado-barra").addClass("hidden");
+                $(".borde-menu").css("border-bottom", "0px");
+            }
+        );
+
+        $("#ano").change(function () {
+            $("#Grafico").fadeOut(750, function () {
+                $("#Bienvenida").fadeIn(750, function () {
+                });
+            });
+            $("#IDPAPA").val("0");
+            $("#NOMBREPAPA").val("Ingresos");
+            $("#NIVEL").val("1");
+            idpapa = "0";
+            ID = "0";
+            nombretipo = "";
+            className = "Ingresos";
+            nivel = 1;
+            $("#chart_div").empty();
+            $("#miga").empty();
+        });
+    });
+
+    function dibujar(aux) {
+            
+        document.getElementById("FUNCECONO").value = ((aux == 0) ? "CUENTA" : "AREA");
+        drawChart(0);
+        $("#Bienvenida").fadeOut(500, function () {
+            $("#Grafico").fadeIn(500, function () {
+            });
+        });
+    }
+
+    </script>
+
+}

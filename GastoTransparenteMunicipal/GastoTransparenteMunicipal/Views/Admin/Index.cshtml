@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Core.Municipalidad>
+
+@{
+    ViewBag.Title = "ActivarMunicipio";
+}
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Municipios activos
+                    </h1>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped" id="tableMunicipios">
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Última actualización
+                            </th>
+                            <th>
+                                Último périodo
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @item.Nombre
+                            </td>
+                            <td>
+                                @item.Gasto_Ano.Last().UpdatedOn.Value.ToShortDateString()
+                            </td>
+                            <td>
+                                @{
+                                    string mes = item.Gasto_Ano.OrderByDescending(r => r.Ano).Select(r => r.Semestre).First().ToString();
+                                }
+                                @switch (mes)
+                                {
+                                    case "1":
+                                        <span>a Marzo </span>
+                                    break;
+                                    case "2":
+                                        <span>a Junio </span>
+                                    break;
+                                    case "3":
+                                        <span>a Septiembre </span>
+                                    break;
+                                }
+                                        @item.Gasto_Ano.OrderByDescending(r=>r.Ano).Select(r=>r.Ano).First()
+                            </td>
+                        </tr>
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row seccion-destado">
+    
+</div>
+

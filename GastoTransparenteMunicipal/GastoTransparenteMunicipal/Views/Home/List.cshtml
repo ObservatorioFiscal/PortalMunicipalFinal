@@ -1,0 +1,204 @@
+﻿@model IEnumerable<Core.Municipalidad>
+
+@{
+    ViewBag.Title = "Municipios";
+}
+
+
+<div class="row">
+    <div class="col-12 homefont" >
+    </div>
+    <div class="relative margin-top">
+        <p class="text-center">
+            <img class="img-fluid" src="~/Content/image/municipiosblanco/municipio.png" />
+        </p>
+        <h3 class="text-center blanco ">
+            Bienvenido al <br /> Portal de Cuentas Claras Municipal
+        </h3>
+        <p class="text-center blanco">“Por una rendición de cuenta entendible para el vecino”</p>
+    </div>
+
+    <div class="col-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 salto">
+                </div>
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="azul">¿Qué es Cuentas Claras Municipal?</h3>
+                            <p><br /></p>
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <p>
+                                Cuentas Claras es un iniciativa que buscar transparentar la rendición de cuentas relacionada y que consiste en el diseño y la creación de un portal de rendición de cuentas que
+                                los municipios pueden implementar en su propio sitio web para publicar información de su gasto
+                                de forma amigable, entendible y de interés para la comunidad.<br /><br />
+                                De esta manera, buscamos promover una mejor rendición de cuentas del gasto municipal que
+                                atraiga a los vecinos y que les otorgue mayores capacidades de control. Para ello,
+                                incentivaremos no solamente la publicación de datos brutos relevantes, sino también
+                                el uso de visualizaciones que posibiliten la mayor obtención de conclusiones para los
+                                vecinos, comprendiendo en qué y cómo se gastan los recursos municipales.
+                            </p>
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <img class="img-fluid" src="~/Content/image/respal1.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><br /></p>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="azul">Beneficios</h3>
+                        </div>
+                        <div class="col-md-4"><img src="~/Content/image/respal3.png" class="img-fluid" /></div>
+                        <div class="col-md-8"><p><br />Esta plataforma, al mostrar de forma simple y amena la rendición de cuentas del municipio, permita aumentar el interés de la comunidad por el control social de los recursos administrados por la entidad edilicia.</p></div>
+                    </div>
+
+
+                </div>
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="text-center azul">Testimonios<br /><br /></h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="~/Content/image/jadue.jpg" class="img-fluid" />
+                                        </div>
+                                        <div class="col-9">
+                                            <p>
+                                                <strong class="azul"> Daniel Jadue </strong><br /><small class="amarillo">Alcalde Recoleta</small><br />
+                                                "Este convenio es muy importante para nosotros, puesto que durante nuestra gestión hemos trabajado con total transparencia ante nuestros vecinos y vecinas respecto a los recursos que invierte la Municipalidad. Una política municipal que nos llevó a convertimos en la cuarta comuna más transparente del país."
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="~/Content/image/leitao.jpg" class="img-fluid" />
+                                        </div>
+                                        <div class="col-9">
+                                            <p>
+                                                <strong class="azul">Carolina Leitao</strong><br /><small class="amarillo">Alcalde Peñalolen</small><br />
+                                                "Esta iniciativa va en directo beneficio de los vecinos, sobre todo en un año en que tendremos elecciones municipales, a fin de transparentar y facilitar a las personas el acceso a la información. Además, consolida el trabajo que estamos haciendo en Peñalolén, donde el Consejo de la Transparencia nos sitúa entre los diez municipios que más cumplen  con los requerimientos de publicación de información en el sitio web."
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="~/Content/image/torrealba.jpg" class="img-fluid" />
+                                        </div>
+                                        <div class="col-9">
+                                            <p>
+                                                <strong class="azul">Raúl Torrealba</strong><br /><small class="amarillo">Alcalde Vitacura</small><br />
+                                                "La transparencia y la facilidad para que todo vecino puede acceder de mejor forma a controlar lo realizado por sus representantes es fundamental. Por eso apoyamos esta iniciativa con un sitio web amigable y de fácil acceso."
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <br />
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="azul">Metodologías de colaboración</h3>
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <img src="~/Content/image/respal2.png" class="img-fluid" />
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <p>
+                                <br />Para el desarrollo de este proyecto, se trabajó en un diagnóstico inicial donde se levantó información en distintos talleres de focus group con vecinos de las comunas participantes de la iniciativa, identificándose las principales temáticas de interés y requerimientos de información de los ciudadanos relacionadas con los ingresos y gastos municipales.<br /><br />
+                                Posteriormente, se realizaron jornadas de trabajo con funcionarios de los municipios pilotos para cruzar las necesidades de información identificadas en los focus con los datos disponibles actualmente en los sistemas informáticos internos de estas instituciones, con lo cual se pudo definir la información a publicar en el portal.<br /><br />
+                                Finalmente, se trabajó el diseño la plataforma en distintas etapas, incluyendo en cada una variadas pruebas de evaluación de experiencia de usuarios, para garantizar que la arquitectura, funcionalidades y navegación del sitio responda a las necesidades de los distintos perfiles de ciudadanos potenciales.<br /><br />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="text-center">
+                                Municipios actuales en el proyecto.
+                            </h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                @{
+                                    var root = HttpContext.Current.Request.Url.Host;
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="col-md-3 padding-Div">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <a href="@string.Format("{0}/{1}", root,item.DireccionWeb)">
+                                                        <h6 class="text-center">@item.Nombre</h6>
+                                                            <img src='@("../../../Content/image/municipios/" + item.DireccionWeb + ".png")' class="img-fluid" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 salto">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="azul text-center">Entidades participantes y roles</h3>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="~/Content/image/observatorio.png" class="img-fluid" />
+                            <h6 class="text-center"><strong>Observatorio del Gasto Fiscal en Chile</strong></h6>
+                            <p class="text-center">
+                                Organización de la sociedad civil impulsora del proyecto, que brinda acompañamiento permanente en las mejoras a la plataforma y desarrolla evaluación de sus resultados.<br />
+                                <br /><a href="https://observatoriofiscal.cl/" class="btn">Sitio Web</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="~/Content/image/transparente.png" class="img-fluid" />
+                            <h6 class="text-center"><strong>Municipalidad</strong></h6>
+                            <p class="text-center">
+                                Entidad que produce la información de transparencia contenida en la plataforma, y que tiene el rol de cargarla y actualizarla periódicamente.<br />
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="~/Content/image/consejo.png" class="img-fluid" />
+                            <h6 class="text-center"><strong>Consejo para la transparencia</strong></h6>
+                            <p class="text-center">
+                                Institución autónoma que vela por la administración, mantención y despliegue de la plataforma en las municipalidades que se adhieran al proyecto para su implementación en sus sitios web.<br />
+                                <br /><a href="https://www.consejotransparencia.cl/" class="btn">Sitio Web</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row padding-Div">
+            </div>
+
+            <div class="row padding-Div">
+            </div>
+        </div>
+    </div>
+</div>
+

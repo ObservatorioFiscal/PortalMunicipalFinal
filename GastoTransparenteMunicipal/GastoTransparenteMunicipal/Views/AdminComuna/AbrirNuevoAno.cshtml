@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Abrir Nuevo Año";
+}
+
+<div class="container">
+    <div class="row seccion-destado">
+        <div class="col-md-12">
+            <h1>
+                Abrir Nuevo periodo a la carga de información.
+            </h1>
+        </div>
+        <div class="col-md-12">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="@Url.Action("AbrirNuevoAno", "AdminComuna")">
+                
+                <label>Año</label>
+                <input type="number" id="ano" min="2010" max="@DateTime.Today.Year" class="form-control" />
+
+                <label>Periodo</label>
+                <select class="form-control">
+                    <option value="">Completo</option>
+                    <option value="1">a marzo</option>
+                    <option value="2">a junio</option>
+                    <option value="3">a septiembre</option>
+                </select>
+
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+</div>

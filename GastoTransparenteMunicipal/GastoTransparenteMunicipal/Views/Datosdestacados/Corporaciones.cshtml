@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "Corporaciones";
+}
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Financiamiento de Corporaciones
+                        <small>
+                            del año:
+                            <span class="select">
+                                @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "ano" })
+                            </span>
+                        </small>
+                    </h1>
+                    <p>
+                        Una parte del rol público encomendado al municipio en la comuna está delegado en Corporaciones, específicamente en temas de Salud, Educación, Cultura y Deportes.
+                        En estas visualizaciones podrás conocer los montos de los aportes que reciben del municipio, y el porcentaje que representan del presupuesto total del mismo.
+                    </p>
+                </div>
+            </div>
+            <div class="row padding-Div">
+                <div class="col-12" id="Grafico">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><small>*La información presentada en la seccion es subida y presentada exclusivamente por el municipio.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p class="text-right">
+
+                            Compartir:
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="DescargaDataset('corporaciones')" class="btn btn-xs">Descarga Dataset</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tooltip" class="tooltiptremap" style="transition:opacity 0.4s linear;">
+    <div class="caja">
+        <div class="titulo">
+            <h5><b id="classNombre"></b></h5>
+        </div>
+        <div class="descripcion">
+            <p>Origen:</p>
+            <h5 id="valueTooltip1"></h5>
+            <p><br>Destino:</p>
+            <h5 id="valueTooltip2"></h5>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* set the CSS */
+    
+
+    .link {
+        fill: none;
+        stroke: #000;
+        stroke-opacity: .07;
+    }
+
+        .link:hover {
+            stroke-opacity: .25 !important;
+        }
+
+    .node rect {
+        cursor: pointer;
+        fill-opacity: .9;
+        shape-rendering: crispEdges;
+    }
+
+    .node text {
+        pointer-events: none;
+        text-shadow: 0 0px 0 #fff;
+    }
+</style>
+
+@section Scripts{
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://unpkg.com/d3-sankey@0.6"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script>
+        function CreacionGrafico() {
+            var svg = d3.select("svg"),
+                width = +svg.attr("width"),
+                height = +svg.attr("height");
+
+            var formatNumber = d3.format(""),
+                format = function (d) { return formatNumber(d) + " Millones de pesos"; },
+                color = d3.scaleOrdinal(d3.schemeCategory20);
+
+            var sankey = d3.sankey().nodeWidth(100).nodePadding(10).extent([[1, 1], [width - 1, height - 6]]);
+
+            var link = svg.append("g").attr("class", "links").attr("fill", "none").attr("stroke", "#000").attr("stroke-opacity", 0.1).selectAll("path");
+
+            var node = svg.append("g").attr("class", "nodes").selectAll("g");
+
+            // Define the div for the tooltip
+            var tooltip = d3.select(".tooltiptremap");                // NEW
+      
+            var IDANO = $("#ano").val();
+            var url = "@Url.Action("CorporationAjax", "FeaturedData")" + "?year=" + IDANO;
+            d3.json(url, function (error, energy) {
+                if (error) throw error;
+
+                sankey(energy);
+
+                link = link
+                    .data(energy.links)
+                    .enter().append("path")
+                    .attr("class", "link")
+                    .attr("d", d3.sankeyLinkHorizontal())
+                    .attr("id", function (d, i) {
+                        d.id = i;
+                        return "link-" + i;
+                    })
+                    .attr("stroke-width", function (d) { return Math.max(1, d.width); });
+
+                link.on('mouseover', function (d) {
+                    document.getElementById("classNombre").innerHTML = "<small>Monto:</small><br> $"+puntos(d.value);
+                    document.getElementById("valueTooltip1").innerHTML = d.source.name;
+                    document.getElementById("valueTooltip2").innerHTML = d.target.name;
+                    tooltip.style("opacity", "1")
+                });
+
+                link.on('mouseout', function () {
+                    tooltip.style("opacity", "0")
+                });
+
+                link.on('mousemove', function (d) {
+                    tooltip.style('top', function (d) {
+                        if (d3.event.pageY >= 250) {
+                            return (d3.event.pageY - 210) + 'px'
+                        }
+                        else {
+                            return (d3.event.pageY + 10) + 'px'
+                        };
+                    });
+                    tooltip.style('left', function (d) {
+                        if (d3.event.pageX >= 400) { return (d3.event.pageX - 310) + 'px' }
+                        else { return (d3.event.pageX + 10) + 'px' };
+                    });
+                });
+
+                node = node
+                    .data(energy.nodes)
+                    .enter().append("g")
+                    .attr("class", "node")
+                    .on("click", highlight_node_links);
+
+                node.append("rect")
+                    .attr("x", function (d) { return d.x0; })
+                    .attr("y", function (d) { return d.y0; })
+                    .attr("height", function (d) { return d.y1 - d.y0; })
+                    .attr("width", function (d) { return 100; })
+                    .attr("fill", function (d) {
+                        return "#0D2B50";
+                    })
+                    .attr("stroke", "#ffffff");
+
+                node.append("text")
+                    .attr("x", function (d) { return d.x0 - 20; })
+                    .attr("y", function (d) { return (d.y1 + d.y0 - 15) / 2; })
+                    .attr("dy", "0.9em")
+                    .attr("text-anchor", "end")
+                    .text(function (d) {
+                        if ($("#Grafico").width() > 500) {
+                            return d.name2;
+                        }
+                        else {
+                            return "";
+                        }
+                    })
+                    .filter(function (d) { return d.x0 < width / 2; })
+                    .attr("x", function (d) { return d.x1 + 20; })
+                    .attr("text-anchor", "start");
+                
+
+                node.append("text")
+                    .attr("class", "nodeValue")
+                    .text(function (d) { return d.name2 + "\n" + format(d.value); });
+
+                ///align vertically???
+                node.selectAll("text.nodeValue")
+                    .attr("x", function (d) { return d.x0 + 10; })
+                    .attr("y", function (d) { return (d.y1 + d.y0 + 5) / 2; })
+                    .text(function (d) { return "$"+puntos(d.value); })
+                    .style("fill", "white")
+                    .style("text-shadow", " 0 0 0 #fff")
+                    .attr("text-anchor", "start");
+
+
+                function highlight_node_links(node, i) {
+
+                    var remainingNodes = [],
+                        nextNodes = [];
+
+                    var stroke_opacity = 0;
+                    if (d3.select(this).attr("data-clicked") == "1") {
+                        d3.select(this).attr("data-clicked", "0");
+                        stroke_opacity = 0.07;
+                    } else {
+                        d3.select(this).attr("data-clicked", "1");
+                        stroke_opacity = 0.25;
+                    }
+
+                    var traverse = [{
+                        linkType: "sourceLinks",
+                        nodeType: "target"
+                    }, {
+                        linkType: "targetLinks",
+                        nodeType: "source"
+                    }];
+
+                    traverse.forEach(function (step) {
+                        node[step.linkType].forEach(function (link) {
+                            remainingNodes.push(link[step.nodeType]);
+                            highlight_link(link.id, stroke_opacity);
+                        });
+
+                        while (remainingNodes.length) {
+                            nextNodes = [];
+                            remainingNodes.forEach(function (node) {
+                                node[step.linkType].forEach(function (link) {
+                                    nextNodes.push(link[step.nodeType]);
+                                    highlight_link(link.id, stroke_opacity);
+                                });
+                            });
+                            remainingNodes = nextNodes;
+                        }
+                    });
+                }
+
+                function highlight_link(id, opacity) {
+                    d3.select("#link-" + id).style("stroke-opacity", opacity);
+                }
+
+            });
+
+            //**********************************************
+            
+        }
+        function sizeDimension() {
+            var Width = $("#Grafico").width();
+            $("#Grafico").append("<svg width=" + Width + " height=" + parseInt(Width) / 2 + "></svg>");
+        }
+
+        $(document).ready(function () {
+            $("select").resizeselect();
+            sizeDimension();
+            CreacionGrafico();
+            $("select").change(function () {
+                CreacionGrafico();
+            });
+
+
+        });
+    </script>
+
+
+
+}

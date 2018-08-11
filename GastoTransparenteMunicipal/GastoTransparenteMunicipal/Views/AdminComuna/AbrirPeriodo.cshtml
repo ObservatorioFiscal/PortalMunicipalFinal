@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Abrir nuevo Periodo";
+}
+
+<div class="container">
+    <div class="row seccion-destado">
+
+        <div class="col-md-12">
+            <h1>
+                Abrir nuevo periodo
+            </h1>
+        </div>
+        <div class="col-md-12">
+            @using (Html.BeginForm("AbrirPeriodo", "AdminComuna", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            <div class="form-group">
+                Año
+                @Html.DropDownList("ano", (SelectList)ViewBag.ano, null, new { @class = "form-control", @id = "ano" })
+            </div>
+            <div class="form-group">
+                Periodo
+                @Html.DropDownList("periodo", (SelectList)ViewBag.periodo, null, new { @class = "form-control", @id = "periodo" })
+            </div>
+            <input type ="hidden" id="anoactual" value="@DateTime.Now.Year" />
+            <input type ="hidden" id="idMuni" value="@ViewBag.idMuni" />
+            <div class="form-group">
+                <p class="text-right">
+                    <input type="submit" class="btn btn-primary" value="Abrir Periodo" />
+                </p>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#ano").change(function () {
+                if ($("#ano").val() == $("#anoactual").val()) {
+                    $.ajax({
+                        cache: false,
+                        async: false,
+                        type: 'POST',
+                        data: {
+                            ano: parseInt($("#ano").val()),
+                            idMuni: parseInt($("#idMuni").val())
+                        },
+                        url: '@Url.Action("FiltroMeses", "AdminComuna")',
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#periodo option[value='0']").remove();
+                            $("#periodo option[value='1']").remove();
+                            $("#periodo option[value='2']").remove();
+                            $("#periodo option[value='3']").remove();
+                            var aux = false;
+                            $.each(data, function (i, item) {
+                                if (item == 0) {
+                                    aux = true;
+                                } else if (item == 1) {
+                                    $('#periodo').append('<option value="1" >a Marzo</option>');
+                                } else if (item == 2) {
+                                    $('#periodo').append('<option value="2" >a Junio</option>');
+                                } else if (item == 3) {
+                                    $('#periodo').append('<option value="3" >a Septiembre</option>');
+                                }
+                            });
+                            if (aux == true) {
+                                $('#periodo').append('<option value="0" >Completo</option>');
+                            }
+                        },
+                        error: function (msg) {
+                        }
+                    });
+                }
+                else {
+                    $("#periodo option[value='0']").remove();
+                    $("#periodo option[value='1']").remove();
+                    $("#periodo option[value='2']").remove();
+                    $("#periodo option[value='3']").remove();
+                    $('#periodo').append('<option value="0" >Completo</option>');
+                }
+                
+                
+            });
+        });
+    </script>
+
+}
+
+
+

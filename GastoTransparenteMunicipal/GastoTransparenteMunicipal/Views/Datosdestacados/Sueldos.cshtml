@@ -1,0 +1,225 @@
+﻿@using Core;
+@{
+    ViewBag.Title = "Sueldos";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/styleSueldos.css">
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Remuneraciones
+                        <small>
+                            de
+                            <span class="select">
+                                <select id="categoria" class="muntotal" name="name">
+                                    <option value="@OrigenData.Adm">Adm. y Serv. Municipales</option>
+                                    <option value="@OrigenData.Salud">Salud</option>
+                                    <option value="@OrigenData.Educacion">Educación</option>
+                                    @if (ViewBag.cementerio)
+                                    {
+                                        <option value="@OrigenData.Cementerio">Cementerio</option>
+                                    }
+                                </select>
+                            </span>
+                        </small>
+                        <small>
+                            del año:
+                            <span class="select">
+                                @Html.DropDownList("name", (SelectList)ViewBag.Anos, null, new { @class = "muntotal", @id = "ano" })
+                            </span>
+                        </small>
+                    </h1>
+                    <p>En esta sección podrás conocer estadísticas de las remuneraciones promedio y la cantidad de funcionarios municipales, según distintas clasificaciones de interés. En cada clasificación, se excluye la información del personal contratado a honorarios en el municipio <b>(salvo en el caso de la "Calidad Jurídica")</b>, debido legalmente estas personas no son consideradas funcionarios municipales según el Estatuto de la Ley 18.884, y por tanto, en el municipio no se cuenta con toda la información que aquí se desglosa.</p>
+                </div>
+            </div>
+
+            <div class="row padding-Div">
+                <div class="col-md-12">
+                    <div id="tabla" class="row muntotal">
+                        <div class="col-12 col-sm-4">
+                            <div class="row">
+                                <div id="padre1" onclick="cambioPadre(1)" class="padres align-self-center col-6 col-sm-12 borde-papa">
+                                    <h5>&nbsp;&nbsp;<span class="md-36 icon-Recurso9"></span>&nbsp; Estamento <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Corresponde a la categoría que tiene el funcionario en el escalafón municipal.</span></span></h5>
+                                </div>
+                                <div id="padre2" onclick="cambioPadre(2)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso13"></span> Profesiones <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Se refiere al título profesional estándar que ostentan los funcionarios del municipio. En el caso de los funcionarios que no poseen título profesional, se agrupan en la categoría "No profesionales".</span></span></h5>
+                                </div>
+                                <div id="padre3" onclick="cambioPadre(3)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso10"></span> Nivel Educación <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Está asociado a una clasificación del nivel de escolaridad que alcanzaron los funcionarios del municipio.</span></span></h5>
+                                </div>
+                                <div id="padre4" onclick="cambioPadre(4)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso8"></span> Rango etario <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Corresponde a intervalos de edades donde están clasificados los funcionarios, con el fin de observar de forma más simple cómo se distribuyen las edades del personal.</span></span></h5>
+                                </div>
+                                <div id="padre5" onclick="cambioPadre(5)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso11"></span> Calidad jurídica <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Son clasificaciones del tipo de contratación que posee el funcionario, en las cuales se incluyen aquellas que están contempladas y regidas en el Estatuto de Funcionarios Municipales, como aquellas regidas por otras leyes como el Código del Trabajo.</span></span></h5>
+                                </div>
+                                <div id="padre6" onclick="cambioPadre(6)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso4"></span> Antigüedad <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Contiene intervalos de años de antigüedad de los funcionarios en el municipio, con el fin de observar de forma más simple cómo se distribuyen los años de antigüedad del personal. En caso que el funcionario haya reingresado al municipio 1 vez o más, se toma la antigüedad a contar de la última fecha de ingreso.</span></span></h5>
+                                </div>
+                                <div id="padre7" onclick="cambioPadre(7)" class="padres align-self-center col-6 col-sm-12 no-papa">
+                                    <h5><span class="md-36 icon-Recurso12"></span> Grado <span class="cssToolTip"><span class="md-12 icon-Recurso-help amarillo"></span><span class="oculto">Corresponde al nivel que tienen los funcionarios en la escala de remuneraciones que rige en el sector municipal.</span></span></h5>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-8">
+                            <div class="row borde">
+                                <div id="hijosdiv1" class="solo">
+                                </div>
+                                <div id="hijosdiv2" class="solo hidden">
+                                </div>
+                                <div id="hijosdiv3" class="solo hidden">
+                                </div>
+                                <div id="hijosdiv4" class="solo hidden">
+                                </div>
+                                <div id="hijosdiv5" class="solo hidden">
+                                </div>
+                                <div id="hijosdiv6" class="solo hidden">
+                                </div>
+                                <div id="hijosdiv7" class="solo hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><small>*La información presentada en la seccion es subida y presentada exclusivamente por el municipio.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p class="text-right">
+
+                            Compartir:
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="DescargaDataset('sueldos')" class="btn btn-xs">Descarga Dataset</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script src="~/Scripts/select.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("select").resizeselect();
+            consultaBd();
+
+            $("select").change(function () {
+                consultaBd();
+            });
+        });
+
+        function cambioPadre(aux) {
+            for (var i = 1; i < 8; i++) {
+                $("#hijosdiv" + i).addClass("hidden");
+                $("#padre" + i).removeClass("borde-papa");
+                $("#padre" + i).addClass("no-papa");
+            }
+            $("#hijosdiv" + aux).removeClass("hidden");
+            $("#padre" + aux).addClass("borde-papa");
+            $("#padre" + aux).removeClass("no-papa");
+        }
+        function consultaBd() {
+            for (var i = 2; i < 8; i++) {
+                $("#padre" + i).removeClass("borde-papa");
+                $("#padre" + i).addClass("no-papa");
+
+            }
+            $("#padre1").addClass("borde-papa");
+            $("#padre1").removeClass("no-papa");
+            $.ajax({
+                cache: false,
+                async: false,
+                type: 'POST',
+                data: {
+                    origenData: $("#categoria").val(),
+                    year: $("#ano").val()
+                },
+                url: '@Url.Action("PersonalSalary", "FeaturedData")',
+                dataType: 'json',
+                success: function (data) {
+                    $(".hijos").remove();
+
+                    $.each(data, function (index, item) {
+                        $("#hijosdiv" + item.Item).append(cabezera());
+                        $.each(item.Lista, function (index2, item2) {
+                            if (index2 == 0) {
+                                $("#hijosdiv" + item.Item).append(nuevoHijo(item2, "hijos-primero"));
+                            } else {
+                                $("#hijosdiv" + item.Item).append(nuevoHijo(item2,""));
+                            }
+                            
+                        });
+                    });
+                },
+                //error: function (msg) {
+                //    $('#btnagendar').attr('disabled', false);
+                //}
+            });
+        }
+        function nuevoHijo(item,nomclas) {
+            return '\
+                    <div class="col-md-12 hijos '+ nomclas +' text-center">\
+                        <div class="row">\
+                            <div class="col-4 align-self-center">\
+                                <h6>' + item.Nombre + '</h6>\
+                            </div>\
+                            <div class="col-4 align-self-center">\
+                                <div class="row">\
+                                    <div class="col-12"><div class="row"><div class="col-5 text-right align-self-center"><span class="md-36 icon-Recurso15"></span></div><div class="col-7 text-left align-self-center">$' + puntos(item.MHombre) + '</div></div></div>\
+                                    <div class="col-12"><div class="row"><div class="col-5 text-right align-self-center"><span class="md-36 icon-Recurso14"></span></div><div class="col-7 text-left align-self-center">$' + puntos(item.MMujer) + '</div></div></div>\
+                                </div>\
+                            </div>\
+                            <div class="col-4 align-self-center">\
+                                <div class="row">\
+                                    <div class="col-12"> ' + puntos(item.CHombre) + '</div>\
+                                    <div class="col-12"> ' + puntos(item.CMujer) + '</div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                    ';
+        }
+
+        function cabezera() {
+            return '\
+                <div class="col-md-12 cabezera">\
+                    <div class="row">\
+                        <div class="col-4 align-self-center">\
+                            <h6></h6>\
+                        </div>\
+                        <div class="col-4 align-self-center">\
+                            <div class="row">\
+                                <div class="col-12 text-center"><p><br>Remuneración Promedio<br></p></div>\
+                            </div>\
+                        </div>\
+                        <div class="col-4 align-self-center">\
+                            <div class="row">\
+                                <div class="col-12 text-center"><p><br>Cantidad de Funcionarios<br></p></div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+                '
+        }
+    </script>
+
+
+
+}

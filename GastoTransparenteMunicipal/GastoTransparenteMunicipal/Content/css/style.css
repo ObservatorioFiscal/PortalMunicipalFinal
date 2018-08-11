@@ -1,0 +1,553 @@
+body{
+	font-family:Roboto;
+	font-weight: 300;
+}
+
+.small{
+    font-size:80%;
+}
+
+a{
+	color:#0D2B50;
+}
+
+a:hover{
+	color:#f1c330;
+}
+
+h1, h2, h3,h4,h5,h6{
+	font-weight: 300;
+}
+
+h1 {
+    font-size: 2.75rem;
+    padding-top: 4.4rem;
+    line-height: 1;
+}
+
+h1 small {
+    font-size: 60%;
+}
+
+h2{
+	padding-top: 1rem;
+	font-size: 2rem;
+}
+h3{
+	font-size: 2.25rem;
+	font-weight: 100;
+}
+
+h3 span{
+	font-weight: 300;
+}
+h3 small{
+	font-size: 1.5rem;
+	font-weight: 100;
+}
+
+h4{
+	font-size: 2.25rem;
+	font-weight: 100;
+}
+
+h5{
+	font-size: 1.50rem;
+	font-weight: 300;
+}
+
+h6{
+	font-size: 1.25rem;
+	font-weight: 300;
+}
+
+.padding-Div{
+	padding-top: 2rem;
+	padding-bottom: 3rem;
+}
+.padding-Div-top {
+    padding-top: 2rem;
+}
+.padding-cero {
+    padding-left: 0;
+    padding-right: 0;
+}
+.margin-cero {
+    margin: 0;
+}
+
+.amarillo{
+	color:#f1c330;
+}
+
+.azul {
+    color: #0D2B50;
+}
+
+.azulB{
+	background-color:#0D2B50;
+	color:#ffffff;
+}
+
+.RojoB {
+    background-color: #743131;
+    color: #ffffff;
+}
+.blanco{
+	color:#ffffff !important;
+}
+.gris{
+	color:#edf1f2;
+}
+.blanco{
+	color:#ffffff;
+}
+.grisB{
+	background-color:#edf1f2;
+}
+
+.blanco a{
+	color:#ffffff;
+}
+.blanco a:hover{
+	color:#ffffff;
+	text-decoration: underline;
+}
+
+.muntotal {
+    color: #0083b9 !important;
+    fill:  #0083b9 !important;
+}
+.admmunicipal {
+    color: #008e00 !important;
+    fill:  #008e00 !important;
+}
+.salud {
+    color: #ea1c73 !important;
+    fill:  #ea1c73 !important;
+}
+
+.educacion {
+    color: #9b5cb5 !important;
+    fill:  #9b5cb5 !important;
+}
+
+.cementerio {
+    color: #990000 !important;
+    fill:  #990000 !important;
+}
+
+
+
+.nav-item {
+    border-top: 1px solid #f5f9ff;
+    padding: 5px 0;
+    list-style: none;
+}
+
+.menuflecha {
+    margin: 0 0 0 5px;
+}
+
+@media (min-width: 768px) {
+    .nav-item {
+        border: 0;
+        padding: 0;
+    }
+}
+
+
+.seccion-destado {
+    padding-top: 2rem;
+}
+
+@media (min-width: 576px) {
+    .seccion-destado {
+        padding-top: 7rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .seccion-destado {
+        padding-top: 7.5rem;
+    }
+}
+
+.logo-top {
+    padding: 10px 0px;
+    transition: all 0.5s ease
+}
+
+#barra-primera,
+.menu-auxiliar {
+    transition: all 0.2s ease
+}
+
+.menu-auxiliar {
+    transition: all 0.2s ease; 
+    opacity:0;
+}
+#menu-mobile {
+    background-color: #f5f9ff;
+    padding: 0px 5px;
+    color: #315274;
+}
+
+.active {
+    color: #f1c330 !important;
+    border-bottom: 4px solid #f1c330;
+}
+
+.active2 {
+    color: #f1c330;
+    background-color: #f5f9ff;
+}
+
+.homefont {
+    background-image: url(../../../Content/image/fondohome.jpg);
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    margin-top:45px;
+}
+
+.relative {
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    background-color: rgba(13, 43, 80, 0.65);
+    margin-top: 45px;
+    padding-top: 15%;
+    text-shadow: 1px 1px 5px #2f5071;
+}
+
+
+.small-display{
+	display: none;
+}
+
+@media (min-width: 768px) {
+  	.small-display {
+    	display: block;
+  	}
+    .relative {
+        padding-top: 7%;
+    }
+}
+
+@media (min-width: 992px) {
+    .small-display {
+        display: block;
+    }
+    .relative {
+        padding-top: 8%;
+    }
+}
+@media (min-width: 1200px) {
+    
+    .relative {
+        padding-top: 6%;
+    }
+}
+
+
+
+
+
+
+.barra-superior {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 1px 10px rgba(0, 40, 81, 0.25);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease
+}
+
+.hidden {
+    display:none;
+}
+
+.md-16,.md-24,.md-36{
+	vertical-align: middle;
+}
+.md-12 {
+    font-size: 12px;
+}
+
+.md-16{
+	font-size: 16px;
+}
+.md-24{
+	font-size: 24px;
+}
+.md-36{
+	font-size: 36px;
+}
+
+.md-96 {
+    font-size: 96px;
+}
+
+.zoom{
+	border: 1px solid transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.zoom:hover{
+	border: 1px solid white;
+}
+
+
+.destacadocolor{
+	background-color: #f5f9ff;
+}
+
+
+
+.cubo {
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+    background-color: #f5f9ff;
+    margin: 1rem 0;
+}
+
+.paneladmin{
+    font-size:45%;
+}
+
+
+
+.select {
+    background: #fff url('../image/chevron-down.svg') no-repeat 95% center;
+}
+
+    .select select {
+        cursor:pointer;
+        font-weight: 300;
+        padding: 0 5px;
+        border: none;
+        border-bottom: 4px solid #f1c330;
+        box-shadow: none;
+        background-color: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+        .select select option {
+            font-weight: 300;
+            font-size: 80%;
+            color: #212529;
+        }
+
+.celda {
+    padding: 10px 0;
+    border-bottom: 2px solid #a0a0a0;
+    cursor:pointer;
+}
+
+    .celda:hover {
+        background-color: #f5f9ff;
+    }
+
+.solo{
+    width:100%;
+}
+
+.circle{
+    width:30px;
+    height:30px;
+    margin:10px 10px 0 0;
+    border-radius:50%;
+    display:inline-block;
+    background-color:red;
+    vertical-align:middle;
+}
+
+.cabezera {
+    position: absolute;
+    background-color: #f5f9ff;
+    z-index: 2;
+}
+
+
+/* Clase que tendra el tooltip */
+.cssToolTip {
+    position: relative; /* Esta clase tiene que tener posicion relativa */
+}
+
+    /* El tooltip */
+    .cssToolTip .oculto {
+        background: rgb(255, 255, 255);
+        border: 1px solid #b3c1de;
+        border-radius: 3px;
+        box-shadow: 3px 3px 5px #d0d0d0;
+        color: #2f5072;
+        display: none;
+        font-size: 0.55em;
+        padding: 10px;
+        position: absolute;
+        top: 15px;
+        width: 200px;
+        left: 19px;
+        z-index: 100;
+    }
+
+    /* El tooltip cuando se muestra */
+    .cssToolTip:hover .oculto {
+        display: inline; /* Para mostrarlo simplemente usamos display block por ejemplo */
+    }
+
+
+.disable-color {
+    fill: #dddddd !important;
+    color: #dddddd !important;
+}
+
+.change-color {
+    fill: #b3daea !important;
+    color: #b3daea !important;
+}
+
+
+.tooltiptremap {
+    width: 260px;
+    position: absolute;
+    height: auto;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #95989A;
+    pointer-events: none;
+    top: 0;
+    /*visibility: hidden;*/
+    opacity: 0;
+    transition: opacity 0.4s linear;
+}
+
+        .tooltiptremap .caja .titulo {
+            padding: 10px;
+            background-color: #f5f9ff;
+            color: #193659;
+        }
+
+        .tooltiptremap .caja .descripcion {
+            padding: 10px;
+        }
+
+        .tooltiptremap .caja p,
+        .tooltiptremap .caja h5 {
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+
+
+
+
+.arrows {
+    position: relative;
+    /*position: absolute;*/
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%,-50%);
+}
+
+    .arrows:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-left: 7px solid rgba(255,255,255,0.7);
+        border-bottom: 7px solid rgba(255,255,255,0.7);
+        transform: translate(7px,12)rotate(-45deg);
+        animation: arrows 3s linear infinite;
+    }
+
+    .arrows:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-left: 7px solid rgba(255,255,255,0.7);
+        border-bottom: 7px solid rgba(255,255,255,0.7);
+        transform: translate(13px,0px)rotate(-45deg);
+        animation: arrows 3s linear infinite 1s;
+    }
+
+@keyframes arrows {
+    0% {
+        border-left: 7px solid rgba(255,255,255,0);
+        border-bottom: 7px solid rgba(255,255,255,0);
+        transform: translate(-3px,13px)rotate(-45deg);
+    }
+
+    10%, 90% {
+        border-left: 7px solid rgba(255,255,255,0);
+        border-bottom: 7px solid rgba(255,255,255,0);
+    }
+
+    50% {
+        border-left: 7px solid rgba(255,255,255,0.7);
+        border-bottom: 7px solid rgba(255,255,255,0.7);
+        transform: translate(-3px,0)rotate(-45deg);
+    }
+
+    100% {
+        border-left: 7px solid rgba(255,255,255,0);
+        border-bottom: 7px solid rgba(255,255,255,0);
+        transform: translate(-3px,13px)rotate(-45deg);
+    }
+}
+
+
+.form-group{
+    margin:20px 0px;
+}
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+.inline{
+    display:inline-block;
+}
+
+.subimg {
+    vertical-align: sub;
+}
+
+.salto{
+    margin-bottom:100px;
+}

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <div class="row seccion-destado">
+        <div class="col-md-12">
+            <h1>
+                Bienvenido @this.User.Identity.Name
+                <small>
+                    <span class="select">
+                        @this.User.Identity.Name
+                    </span>
+                </small>
+            </h1>
+        </div>
+    </div>
+    <div class="row padding-Div">
+        <div class="col-md-12">
+            <h2>Informacion ya cargada.</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Periodo</th>
+                        <th scope="col">Fecha Carga</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.anoscargados)
+                    {
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row padding-Div">
+
+    </div>
+</div>
+

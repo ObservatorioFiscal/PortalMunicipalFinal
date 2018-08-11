@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row">
+        <div class="col-12 homefont">
+        </div>
+        <div class="relative">
+            <p class="text-center">
+                <img class="img-fluid" src="~/Content/image/municipiosblanco/@ViewBag.logo" />
+            </p>
+            <h3 class="text-center blanco small-display">
+                <small>Bienvenido al Gasto Transparente Municipal</small>
+            </h3>
+            <h3 class="text-center blanco container">
+                @ViewBag.texto1, la Municipalidad <span class="amarillo">gastó @ViewBag.texto2 Millones de pesos</span> <small>de un presupuesto anual de</small> @ViewBag.texto3 Millones de pesos.<br>
+            </h3>
+            <div class="small-display">
+                <p class="text-center blanco">
+                    <small>¿De donde se obtuvo y como se usó ese dinero?<br>Te ayudaremos a encontrar las respuestas.</small>
+                    <br>
+                    <div class="arrows"></div>
+                </p>
+            </div>
+        </div>
+        
+
+</div>
+<div class="row">
+    <div class="col grisB padding-Div" id="IngresoGastos">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h2>¿De dónde provienen los recursos?</h2>
+                    <p><br>Conoce los ingresos percibidos por patentes municipales, permisos de circulación, aportes del gobierno, entre otros, en cada una de las áreas: Salud, Educación, Servicios Municipales y Cementerios.<br><br></p>
+                    <a href="@Url.Action("Index","Ingresos")" class="btn">Ingresos</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h2>¿Cómo se usa ese dinero?</h2>
+                    <p><br>Conoce los gastos realizados en las áreas: Salud, Educación, Servicios Municipales y Cementerios, o según tipo de cuentas, entre los cuales se encuentran: Personal, compra de bienes y servicios o aportes externos.<br><br></p>
+                    <a href="@Url.Action("Index","Gastos")" class="btn">Gastos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col padding-Div">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 padding-cero">
+                    <h2>Datos destacados</h2>
+                    <p>
+                        Analiza cómo se gastan los recursos del municipio en conceptos de interés, como el personal, las compras a proveedores, las subvenciones a organizaciones comunales, y los aportes municipales a las corporaciones.
+                        <br><br><br>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                @if (ViewBag.activos[3])
+                {
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <a href="@Url.Action("Sueldos","DatosDestacados")">
+                                    <span class="md-96 icon-Recurso2"></span>
+                                    <p><br>¿Cual es el sueldo promedio por tipo de funcionario?</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.activos[0])
+                {
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <a href="@Url.Action("Proveedores","DatosDestacados")">
+                                    <span class="md-96 icon-Recurso3"></span>
+                                    <p><br>¿A quiénes le <br> compramos?</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.activos[1])
+                {
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <a href="@Url.Action("Subsidios","DatosDestacados")">
+                                    <span class="md-96 icon-Recurso7"></span>
+                                    <p><br>¿A quiénes<br>  subsidiamos?</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.activos[2])
+                {
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <a href="@Url.Action("Corporaciones","DatosDestacados")">
+                                    <span class="md-96 icon-Recurso1"></span>
+                                    <p><br>¿Cómo se financian nuestras Corporaciones?</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(".destacado").hover(
+            function () {
+                $(".destacado").css("background-color", "#f5f9ff");
+                $("#destacado-barra").removeClass("hidden");
+                $(".borde-menu").css("border-bottom", "1px solid");
+
+            }, function () {
+                $(".destacado").css("background-color", "#ffffff");
+                $("#destacado-barra").addClass("hidden");
+                $(".borde-menu").css("border-bottom", "0px");
+            }
+        );
+    </script>
+}

@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "Carga Proveedores";
+}
+
+
+<div class="container">
+    <div class="row seccion-destado">
+        @if (ViewBag.aviso)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    Esta informacion ya se encuentra cargada, si la vuelve a cargar se reemplaza la anterior.
+                </div>
+            </div>
+        }
+
+        <div class="col-md-12">
+            <h1>
+                Carga de Proveedores año
+                <span class="muntotal">
+                    @ViewBag.ano
+                </span>
+                <br /><br />
+            </h1>
+        </div>
+        <div class="col-md-12">
+            <form action="@Url.Action("CargaProveedores","AdminComuna")" id="formulario" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="id" value="@ViewBag.id" />
+
+                <h4 class="inline">
+                    <img src="~/Content/image/mal.png" id="errorAdm" style="display:none" alt="archivo correcto" />
+                    <img src="~/Content/image/bien.png" id="successAdm" style="display:none" alt="archivo con errores" />
+                    Adm. y Serv. Municipales &nbsp;&nbsp;&nbsp;
+                </h4>
+                <p class="inline">
+                    <small>
+                        <input type="file" accept=".xls,.xlsx" id="fileAdm" name="fileAdm" />
+                        <input type="hidden" id="fileStatusAdm" />
+                        <label class="alert alert-danger" id="messagefileStatusAdm" />
+                    </small>
+                </p>
+                <hr />
+                <br />
+                <h4 class="inline">
+                    <img src="~/Content/image/mal.png" id="errorSalud" style="display:none" alt="archivo correcto" />
+                    <img src="~/Content/image/bien.png" id="successSalud" style="display:none" alt="archivo con errores" />
+                    Salud &nbsp;&nbsp;&nbsp;
+                </h4>
+                <p class="inline">
+                    <small>
+                        <input type="file" accept=".xls,.xlsx" id="fileSalud" name="fileSalud" />
+                        <input type="hidden" id="fileStatusSalud" />
+                        <label id="messagefileStatusSalud" />
+                    </small>
+                </p>
+                <hr />
+                <br />
+                <h4 class="inline">
+                    <img src="~/Content/image/mal.png" id="errorEducacion" style="display:none" alt="archivo correcto" />
+                    <img src="~/Content/image/bien.png" id="successEducacion" style="display:none" alt="archivo con errores" />
+                    Educacion &nbsp;&nbsp;&nbsp;
+                </h4>
+                <p class="inline">
+                    <small>
+                        <input type="file" accept=".xls,.xlsx" id="fileEducacion" name="fileEducacion" />
+                        <input type="hidden" id="fileStatusEducacion" />
+                        <label id="messagefileStatusEducacion" />
+                    </small>
+                </p>
+                <hr />
+                <br />
+
+                <input type="hidden" id="existCementerio" value="@ViewBag.cementerio" />
+                @if (ViewBag.cementerio)
+                {
+                    <h4 class="inline">
+                        <img src="~/Content/image/mal.png" id="errorCementerio" style="display:none" alt="archivo correcto" />
+                        <img src="~/Content/image/bien.png" id="successCementerio" style="display:none" alt="archivo con errores" />
+                        Cementerio &nbsp;&nbsp;&nbsp;
+                    </h4>
+                    <p class="inline">
+                        <small>
+                            <input type="file" accept=".xls,.xlsx" id="fileCementerio" name="fileCementerio" />
+                            <input type="hidden" id="fileStatusCementerio" />
+                            <label id="messagefileStatusCementerio" />
+                        </small>
+                    </p>
+                    <hr />
+                }<br /><br />
+                <input type="button" class="btn" id="boton" value="Confirmar subida de Informacion" disabled>
+            </form>
+        </div>
+    </div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+    <div class="row padding-Div"></div>
+</div>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {
+
+        $("#fileAdm").on("change", function () {
+            upload('@Url.Action("ValidadorCargaProveedoresAdm", "AdminComuna")', 'fileAdm', 'fileStatusAdm')
+        });
+
+        $("#fileSalud").on("change",function () {
+            upload('@Url.Action("ValidadorCargaProveedoresSalud", "AdminComuna")', 'fileSalud', 'fileStatusSalud')
+        });
+        $("#fileEducacion").on("change",function () {
+            upload('@Url.Action("ValidadorCargaProveedoresEducacion", "AdminComuna")', 'fileEducacion', 'fileStatusEducacion')
+        });
+        $("#fileCementerio").on("change",function () {
+            upload('@Url.Action("ValidadorCargaProveedoresCementerio", "AdminComuna")', 'fileCementerio', 'fileStatusCementerio')
+        });
+
+        //SI TODOS LOS HIDDEN
+
+        $("#boton").on("click",function () {
+            //si todos los type hidden en true, realiza el submit():
+            if (1 == 1) {
+                document.getElementById('formulario').submit();
+            }
+        });
+
+        function upload(urlPath, name, result) {
+            var isValid = undefined;
+            var formData = new FormData();
+            var file = document.getElementById(name).files[0];
+            formData.append(name, file);
+            $.ajax({
+                type: 'post',
+                url: urlPath,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#" + result).val(response.isValid);
+                    $("#message" + result).text(response.message);
+                    checkSingleStatus(name, response.isValid);
+                    checkAllStatus();
+                }
+            });
+        }
+
+        function checkAllStatus() {
+            var isValidAdm = $('#fileStatusAdm').val();
+            var isValidSalud = $('#fileStatusSalud').val();
+            var isValidEducacion = $('#fileStatusEducacion').val();
+            var isValidCementerio = $('#fileStatusCementerio').val();
+
+            var existCementerio = $('#existCementerio').val();
+            if (existCementerio == "true") {
+                if (isValidAdm == "true" && isValidSalud == "true" && isValidEducacion == "true" && isValidCementerio == "true") {
+                    $('#boton').prop("disabled", false);
+                } else {
+                    $('#boton').prop("disabled", true);
+                }
+            }
+            else{
+                if (isValidAdm == "true" && isValidSalud == "true" && isValidEducacion == "true") {
+                    $('#boton').prop("disabled", false);
+                } else {
+                    $('#boton').prop("disabled", true);
+                }
+            }
+        }
+
+        function checkSingleStatus(item, result) {
+            if (item == "fileAdm") {
+                if (result == true) {
+                    $('#successAdm').css("display", "inline");
+                    $('#errorAdm').css("display", "none");
+                }
+                else {
+                    $('#successAdm').css("display", "none");
+                    $('#errorAdm').css("display", "inline");
+                }
+            }
+            if (item == "fileSalud") {
+                if (result == true) {
+                    $('#successSalud').css("display", "inline");
+                    $('#errorSalud').css("display", "none");
+                }
+                else {
+                    $('#successSalud').css("display", "none");
+                    $('#errorSalud').css("display", "inline");
+                }
+            }
+            if (item == "fileEducacion") {
+                if (result == true) {
+                    $('#successEducacion').css("display", "inline");
+                    $('#errorEducacion').css("display", "none");
+                }
+                else {
+                    $('#successEducacion').css("display", "none");
+                    $('#errorEducacion').css("display", "inline");
+                }
+            }
+            if (item == "fileCementerio") {
+                if (result == true) {
+                    $('#successCementerio').css("display", "inline");
+                    $('#errorCementerio').css("display", "none");
+                }
+                else {
+                    $('#successCementerio').css("display", "none");
+                    $('#errorCementerio').css("display", "inline");
+                }
+            }
+        }
+    });
+    </script>
+}

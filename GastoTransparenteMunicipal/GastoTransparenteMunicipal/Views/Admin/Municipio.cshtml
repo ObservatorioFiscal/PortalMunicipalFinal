@@ -1,0 +1,364 @@
+﻿@model IEnumerable<Core.Municipalidad>
+
+@{
+    ViewBag.Title = "ActivarMunicipio";
+}
+
+<div class="row seccion-destado">
+    <div class="col">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Editar Municipios Activos.</h1>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped" id="tableMunicipios">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th COLSPAN=4 class="text-center">
+                                Secciones
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th class="text-center">
+                                Activo
+                            </th>
+                            <th style="border-right: 2px solid #474747;" class="text-center">
+                                Cementerio
+                            </th>
+                            <th class="text-center">
+                                Personal
+                            </th>
+                            <th class="text-center">
+                                Proveedores
+                            </th>
+                            <th class="text-center">
+                                Subsidio
+                            </th>
+                            <th class="text-center">
+                                Corporaciones
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model.Where(r => r.Activa == true).ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @item.Nombre
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Activa)
+                                    {
+                                        <input type="checkbox" onclick="MarcarMunicipio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarMunicipio(@item.IdMunicipalidad)" />
+                                    }
+                                </td>
+                                <td class="text-center" style="border-right: 2px solid #474747;">
+                                    @if (item.Cementerio)
+                                    {
+                                        <input type="checkbox" onclick="MarcarCementerio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarCementerio(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Personal)
+                                    {
+                                        <input type="checkbox" onclick="MarcarPersonal(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarPersonal(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Proveedor)
+                                    {
+                                        <input type="checkbox" onclick="MarcarProveedor(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarProveedor(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Subsidio)
+                                    {
+                                        <input type="checkbox" onclick="MarcarSubsidio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarSubsidio(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Corporacion)
+                                    {
+                                        <input type="checkbox" onclick="MarcarCorporacion(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarCorporacion(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
+
+                </div>
+                <div class="col-12">
+                    <h1>Editar Municipios Desactivados.</h1>
+                </div>
+                <div class="col-12">
+                    <h2 class="text-right"><a href="#" onclick="Mostrar()" id="texto">Mostrar Municipios</a></h2>
+                </div>
+                <div class="col-12" id="activar" style="display:none;">
+                    <table class="table table-striped" id="tableMunicipios">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th COLSPAN=4 class="text-center">
+                                Secciones
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th class="text-center">
+                                Activo
+                            </th>
+                            <th style="border-right: 2px solid #474747;" class="text-center">
+                                Cementerio
+                            </th>
+                            <th class="text-center">
+                                Personal
+                            </th>
+                            <th class="text-center">
+                                Proveedores
+                            </th>
+                            <th class="text-center">
+                                Subsidio
+                            </th>
+                            <th class="text-center">
+                                Corporaciones
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model.Where(r => r.Activa == false).ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @item.Nombre
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Activa)
+                                    {
+                                        <input type="checkbox" onclick="MarcarMunicipio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarMunicipio(@item.IdMunicipalidad)" />
+                                    }
+                                </td>
+                                <td class="text-center" style="border-right: 2px solid #474747;">
+                                    @if (item.Cementerio)
+                                    {
+                                        <input type="checkbox" onclick="MarcarCementerio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarCementerio(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Personal)
+                                    {
+                                        <input type="checkbox" onclick="MarcarPersonal(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarPersonal(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Proveedor)
+                                    {
+                                        <input type="checkbox" onclick="MarcarProveedor(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarProveedor(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Subsidio)
+                                    {
+                                        <input type="checkbox" onclick="MarcarSubsidio(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarSubsidio(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Act_Corporacion)
+                                    {
+                                        <input type="checkbox" onclick="MarcarCorporacion(@item.IdMunicipalidad)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="MarcarCorporacion(@item.IdMunicipalidad)" />
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row seccion-destado">
+
+</div>
+                
+
+<script>
+
+    function Mostrar() {
+        var aux = $("#activar").css("display");
+        if (aux == "none") {
+            $("#activar").css("display", "block")
+            $("#texto").text("Ocultar Municipios")
+            
+        }
+        else {
+            $("#activar").css("display", "none")
+            $("#texto").text("Mostrar Municipios")
+        }
+    }
+
+
+    function MarcarMunicipio(id) {
+        $.ajax({
+            url: '@Url.Action("ActivarMunicipio","Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+
+    function MarcarCementerio(id) {
+            $.ajax({
+            url: '@Url.Action("ActivarCementerio", "Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+    function MarcarPersonal(id) {
+            $.ajax({
+            url: '@Url.Action("ActivarPersonal", "Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+    function MarcarProveedor(id) {
+            $.ajax({
+            url: '@Url.Action("ActivarProveedor", "Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+    function MarcarSubsidio(id) {
+            $.ajax({
+            url: '@Url.Action("ActivarSubsidio", "Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+    function MarcarCorporacion(id) {
+            $.ajax({
+            url: '@Url.Action("ActivarCorporacion", "Admin")',
+            type: 'POST',
+            data: {
+                'idMunicipio': id
+            },
+            dataType: 'json',
+            success: function (data) {
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                //alert("Request: " + JSON.stringify(request));
+            }
+        });
+    }
+                </script>
+
+
