@@ -50,8 +50,7 @@ namespace GastoTransparenteMunicipal.Controllers
                 _userManager = value;
             }
         }
-
-        //
+        
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -75,8 +74,7 @@ namespace GastoTransparenteMunicipal.Controllers
             };
             return View(model);
         }
-
-        //
+        
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -99,15 +97,13 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
-
-        //
+        
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
-
-        //
+        
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,8 +126,7 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
-
-        //
+        
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -145,8 +140,7 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             return RedirectToAction("Index", "Manage");
         }
-
-        //
+        
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,8 +154,7 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             return RedirectToAction("Index", "Manage");
         }
-
-        //
+        
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
@@ -169,8 +162,7 @@ namespace GastoTransparenteMunicipal.Controllers
             // Enviar un SMS a través del proveedor de SMS para verificar el número de teléfono
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
-
-        //
+        
         // POST: /Manage/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -194,8 +186,7 @@ namespace GastoTransparenteMunicipal.Controllers
             ModelState.AddModelError("", "No se ha podido comprobar el teléfono");
             return View(model);
         }
-
-        //
+        
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -213,15 +204,13 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
-
-        //
+        
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
-
-        //
+        
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -244,15 +233,13 @@ namespace GastoTransparenteMunicipal.Controllers
             AddErrors(result);
             return View(model);
         }
-
-        //
+        
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
             return View();
         }
-
-        //
+        
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -276,8 +263,7 @@ namespace GastoTransparenteMunicipal.Controllers
             // Si llegamos a este punto, es que se ha producido un error, volvemos a mostrar el formulario
             return View(model);
         }
-
-        //
+        
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
@@ -299,8 +285,7 @@ namespace GastoTransparenteMunicipal.Controllers
                 OtherLogins = otherLogins
             });
         }
-
-        //
+        
         // POST: /Manage/LinkLogin
         //[HttpPost]
         //[ValidateAntiForgeryToken]

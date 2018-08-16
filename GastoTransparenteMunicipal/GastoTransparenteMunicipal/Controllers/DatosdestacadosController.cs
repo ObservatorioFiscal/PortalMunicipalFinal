@@ -11,7 +11,7 @@ namespace GastoTransparenteMunicipal.Controllers
 {
     public class DatosdestacadosController : BaseController
     {                
-        // GET: Datosdestacados
+        // GET: Datosdestacados Sueldos
         public ActionResult Sueldos()
         {
             var municipalidad = GetCurrentIdMunicipality();
@@ -29,7 +29,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return View();
         }
 
-        // GET: Datosdestacados
+        // GET: Datosdestacados Proveedores
         public ActionResult Proveedores()
         {
             var municipalidad = GetCurrentIdMunicipality();
@@ -47,7 +47,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return View();
         }
 
-        // GET: Datosdestacados
+        // GET: Datosdestacados Subsidios
         public ActionResult Subsidios()
         {
             var municipalidad = GetCurrentIdMunicipality();
@@ -64,7 +64,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return View();
         }
 
-        // GET: Datosdestacados
+        // GET: Datosdestacados Proveedores
         public ActionResult Corporaciones()
         {
             var municipalidad = GetCurrentIdMunicipality();

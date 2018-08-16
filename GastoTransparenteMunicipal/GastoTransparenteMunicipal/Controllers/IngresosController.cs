@@ -29,11 +29,12 @@ namespace GastoTransparenteMunicipal.Controllers
             ViewBag.Destacado = "hidden";
             return View();
         }
-
+        
+        //Consulta de que datos traer desde bdd.
         public ActionResult JsonIngresoNivelX(string tipo, int? idNivel, int? profundidad, int year)
         {
             #region FINAL
-            d3Object_TreeMap d3 = new d3Object_TreeMap();
+            D3Object_TreeMap d3 = new D3Object_TreeMap();
 
             string FUNCIONALECONOMICO = tipo;
             string NIVEL = idNivel.ToString();
@@ -132,9 +133,11 @@ namespace GastoTransparenteMunicipal.Controllers
             #endregion
         }
 
-        public class d3Object_TreeMap
+
+        //Creacion de JSON para mostrar en Treemap
+        public class D3Object_TreeMap
         {
-            public d3Object_TreeMap()
+            public D3Object_TreeMap()
             {
                 elementos1 = new List<string>();
             }

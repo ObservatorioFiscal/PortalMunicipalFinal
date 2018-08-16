@@ -11,9 +11,11 @@ namespace GastoTransparenteMunicipal.Controllers
 {
     public class FeaturedDataController : BaseController
     {
-        //****************SUBSIDIOS****************//
+        //****************SUBSIDIOS***************//
         //****************************************//
+        #region SUBSIDIOS
 
+        // Subsidios segun tipo de organizaciones
         [HttpPost]
         public string SubsidyAjaxNivel1(int year)
         {
@@ -23,7 +25,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return subsidioModel.JsonSubsidio;
         }
 
-
+        // buscador de Beneficiarios
         public ActionResult SubsidyChartNivel2(int year, int orden)
         {
             var idMunicipality = GetCurrentIdMunicipality();
@@ -56,6 +58,7 @@ namespace GastoTransparenteMunicipal.Controllers
                         }), JsonRequestBehavior.AllowGet);
         }
 
+        // Detalles de benficios de cada organizacion
         public string SubsidyChartNivel3(int IdNivel2)
         {
             SubsidioModel subsidioModel = new SubsidioModel();
@@ -64,10 +67,13 @@ namespace GastoTransparenteMunicipal.Controllers
             return json;
         }
 
-        //****************PROVEEDORES****************//
+        #endregion
+
+        //****************PROVEEDORES*************//
         //****************************************//
-
-
+        #region PROVEEDORES
+        
+        // Top 20 proveedores mas importantes
         public string Providers(int year, int origenData)
         {
             var idMunicipality = GetCurrentIdMunicipality();
@@ -77,6 +83,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return proveedorModel.JsonProveedor;
         }
 
+        // Listado de proveedores
         public string ProvidersTable(int year, int origenData, int orden)
         {
             ProveedorModel proveedorModel = new ProveedorModel();
@@ -84,6 +91,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return proveedorModel.JsonTabla;
         }
 
+        // Orden de compra de un proveedor en especifico
         public string ProvidersDetalle(int IdNivel1, int origenData)
         {
             ProveedorModel proveedorModel = new ProveedorModel();
@@ -91,20 +99,23 @@ namespace GastoTransparenteMunicipal.Controllers
 
             return proveedorModel.JsonDetalle;
         }
-
-        //****************CORPORACION****************//
+        #endregion
+    
+        //****************CORPORACION*************//
         //****************************************//
-
+        #region CORPORACIONES
         public string CorporationAjax(int year)
         {
             CorporacionModel corporacion = new CorporacionModel();
             corporacion.Load(db, year);
             return corporacion.JsonCorporacion_Nivel1;
         }
+        #endregion
 
         //****************PERSONAL****************//
         //****************************************//
-
+        #region Remuneraciones
+        //Listado de las remuneraciones por las distintas categorias.
         public ActionResult PersonalSalary(int year, int origenData)
         {
             var idMunicipality = GetCurrentIdMunicipality();
@@ -175,5 +186,6 @@ namespace GastoTransparenteMunicipal.Controllers
                     return this.Json(false, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
     }
 }

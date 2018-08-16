@@ -8,6 +8,7 @@ namespace GastoTransparenteMunicipal.Controllers
 {
     public class HomeController : BaseController
     {
+        //GET: Pagina de Inicio
         public ActionResult Index()
         {
             var municipalidad = GetCurrentIdMunicipality();
@@ -36,6 +37,7 @@ namespace GastoTransparenteMunicipal.Controllers
             
         }
 
+        //
         public ActionResult About()
         {
             var municipalidad = GetCurrentIdMunicipality();
@@ -50,16 +52,19 @@ namespace GastoTransparenteMunicipal.Controllers
             return View(municipios);
         }
 
+        //GET: Cuando existe un error.
         public ActionResult Error()
         {
             return View();
         }
 
+        //GET: Cuando no encuentra la url
         public ActionResult Error404()
         {
             return View();
         }
 
+        //GET: Vista comodin de informacion.
         public ActionResult List()
         {
             ViewBag.Destacado = "hidden";
@@ -68,8 +73,9 @@ namespace GastoTransparenteMunicipal.Controllers
             {
                 ViewBag.administracion = true;
                 if (!this.User.IsInRole("admin"))
-                { 
+                {
                     ViewBag.admimuni = true;
+                    ViewBag.logo = (municipalidad != null) ? municipalidad.DireccionWeb + ".png" : "municipio.png";
                 }
             }
             else
@@ -108,12 +114,8 @@ namespace GastoTransparenteMunicipal.Controllers
 
 
         }
-
-        public ActionResult List2()
-        {
-            return View();
-        }
         
+        //Descarga de Dataset de las visualizaciones.
         public JsonResult Descarga(int year, string origenData)
         {
             string aux = "";
