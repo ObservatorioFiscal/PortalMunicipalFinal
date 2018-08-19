@@ -97,6 +97,19 @@ namespace GastoTransparenteMunicipal.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.ReturnUrl = returnUrl;
+                var municipalidad = GetCurrentIdMunicipality();
+                if (municipalidad == null)
+                {
+                    var municipalityName = RouteData.Values["municipality"].ToString().ToLower();
+                    if (municipalityName == "admin")
+                    {
+                        ViewBag.logo = "municipio.png";
+                    }
+                }
+                ViewBag.administracion = true;
+                ViewBag.logo = (municipalidad == null) ? "municipio.png" : municipalidad.DireccionWeb + ".png";
+
                 return View(model);
             }
 
@@ -136,6 +149,19 @@ namespace GastoTransparenteMunicipal.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    var municipalidad = GetCurrentIdMunicipality();
+                    if (municipalidad == null)
+                    {
+                        var municipalityName = RouteData.Values["municipality"].ToString().ToLower();
+                        if (municipalityName == "admin")
+                        {
+                            ViewBag.logo = "municipio.png";
+                        }
+                    }
+                    ViewBag.administracion = true;
+                    ViewBag.logo = (municipalidad == null) ? "municipio.png" : municipalidad.DireccionWeb + ".png";
                     ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
                     return View(model);
             }
@@ -143,14 +169,18 @@ namespace GastoTransparenteMunicipal.Controllers
 
         [AllowAnonymous]
         public ActionResult ForgotPassword()
-        {
+        {            
             var municipalidad = GetCurrentIdMunicipality();
-            ViewBag.activos = new List<bool>{
-                municipalidad.Act_Proveedor,municipalidad.Act_Subsidio,municipalidad.Act_Corporacion,municipalidad.Act_Personal
-            };
-            //ViewBag.administracion = true;
-            ViewBag.logo = municipalidad.DireccionWeb + ".png";
-            ViewBag.Destacado = "hidden";
+            if (municipalidad == null)
+            {
+                var municipalityName = RouteData.Values["municipality"].ToString().ToLower();
+                if (municipalityName == "admin")
+                {
+                    ViewBag.logo = "municipio.png";
+                }
+            }
+            ViewBag.administracion = true;
+            ViewBag.logo = (municipalidad == null) ? "municipio.png" : municipalidad.DireccionWeb + ".png";
             return View();
         }
 
@@ -202,7 +232,16 @@ namespace GastoTransparenteMunicipal.Controllers
         public ActionResult ForgotPasswordConfirmation()
         {
             var municipalidad = GetCurrentIdMunicipality();
-            ViewBag.logo = municipalidad.DireccionWeb + ".png";
+            if (municipalidad == null)
+            {
+                var municipalityName = RouteData.Values["municipality"].ToString().ToLower();
+                if (municipalityName == "admin")
+                {
+                    ViewBag.logo = "municipio.png";
+                }
+            }
+            ViewBag.administracion = true;
+            ViewBag.logo = (municipalidad == null) ? "municipio.png" : municipalidad.DireccionWeb + ".png";
 
             return View();
         }

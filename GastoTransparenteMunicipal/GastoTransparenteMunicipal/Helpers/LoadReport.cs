@@ -5,11 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace GastoTransparenteMunicipal.Helpers
 {
     public class LoadReport
     {
+
+        private GastoTransparenteMunicipalEntities db = new GastoTransparenteMunicipalEntities();
+
         protected DateTime UpdatedOn { get; set; }
         public Guid IdGroupInforme { get; }
 
@@ -18,6 +22,19 @@ namespace GastoTransparenteMunicipal.Helpers
             this.UpdatedOn = DateTime.UtcNow;
             this.IdGroupInforme = Guid.NewGuid();
         }
+
+        //private string ValidateLoad<T>(T item)
+        //{            
+        //    var validationResult = db.Entry<>(item).GetValidationResult();
+        //    if (!validationResult.IsValid)
+        //    {
+        //        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+        //        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+        //        return error;
+        //    }
+        //    return string.Empty;
+        //}
 
         public List<Gasto_Glosa> LoadGastoGlosa(IWorkbook excelInforme)
         {
@@ -49,7 +66,7 @@ namespace GastoTransparenteMunicipal.Helpers
             return gastoGlosas;
         }
 
-                public List<GastoInformev2> LoadInformeGastov2(IWorkbook excelInforme, string tipoNombre, int tipoCodigo)
+        public List<GastoInformev2> LoadInformeGastov2(IWorkbook excelInforme, string tipoNombre, int tipoCodigo)
         {
             List<GastoInformev2> InformeGastos = new List<GastoInformev2>();
             ISheet sheet = excelInforme.GetSheetAt(0);
@@ -64,7 +81,17 @@ namespace GastoTransparenteMunicipal.Helpers
                         informeGasto.UpdatedOnUTC = this.UpdatedOn;
                         informeGasto.IdGroupInformeGasto = this.IdGroupInforme;
                         informeGasto.TipoNombre = tipoNombre;
-                        informeGasto.TipoCodigo = tipoCodigo;
+                        informeGasto.TipoCodigo = tipoCodigo;                        
+
+                        var validationResult = db.Entry(informeGasto).GetValidationResult();
+                        if (!validationResult.IsValid)
+                        {
+                            var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                            var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                            throw new Exception(error);
+                        }
+
                         InformeGastos.Add(informeGasto);
                     }
                     catch (Exception ex)
@@ -77,10 +104,18 @@ namespace GastoTransparenteMunicipal.Helpers
                         informeGasto.UpdatedOnUTC = this.UpdatedOn;
                         informeGasto.IdGroupInformeGasto = this.IdGroupInforme;
                         informeGasto.TipoNombre = tipoNombre;
-                        informeGasto.TipoCodigo = tipoCodigo;
-                        InformeGastos.Add(informeGasto);
+                        informeGasto.TipoCodigo = tipoCodigo;                        
 
-                        var d = ex;
+                        var validationResult = db.Entry(informeGasto).GetValidationResult();
+                        if (!validationResult.IsValid)
+                        {
+                            var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                            var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                            throw new Exception(error);
+                         }
+
+                        InformeGastos.Add(informeGasto);
                     }
                 }
             }
@@ -133,6 +168,17 @@ namespace GastoTransparenteMunicipal.Helpers
                     informeIngreso.IdGroupInformeGasto = this.IdGroupInforme;
                     informeIngreso.TipoNombre = tipoNombre;
                     informeIngreso.TipoCodigo = tipoCodigo;
+                    
+
+                    var validationResult = db.Entry(informeIngreso).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
+
                     InformeIngresos.Add(informeIngreso);
                 }
             }
@@ -152,6 +198,16 @@ namespace GastoTransparenteMunicipal.Helpers
                     informeSubsidio.UpdatedOn = this.UpdatedOn;
                     informeSubsidio.IdGroupInformeSubsidio = this.IdGroupInforme;
 
+                    
+                    var validationResult = db.Entry(informeSubsidio).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
+
                     InformeSubsidio.Add(informeSubsidio);
                 }
             }
@@ -170,7 +226,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Personal_SaludInforme informeSalud = Mapper.Map<IRow, Personal_SaludInforme>(row);
                     informeSalud.UpdatedOn = this.UpdatedOn;
-                    informeSalud.IdGroupInformePersonal = this.IdGroupInforme;
+                    informeSalud.IdGroupInformePersonal = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeSalud).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeSalud.Add(informeSalud);
                 }
@@ -190,7 +255,17 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Personal_EducacionInforme informeEducacion = Mapper.Map<IRow, Personal_EducacionInforme>(row);
                     informeEducacion.UpdatedOn = this.UpdatedOn;
-                    informeEducacion.IdGroupInformePersonal = this.IdGroupInforme;
+                    informeEducacion.IdGroupInformePersonal = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeEducacion).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
+
                     InformeEducacion.Add(informeEducacion);
                 }
             }
@@ -209,7 +284,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Personal_CementerioInforme informeCementerio = Mapper.Map<IRow, Personal_CementerioInforme>(row);
                     informeCementerio.UpdatedOn = this.UpdatedOn;
-                    informeCementerio.IdGroupInformePersonal = this.IdGroupInforme;
+                    informeCementerio.IdGroupInformePersonal = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeCementerio).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeCementerio.Add(informeCementerio);
                 }
@@ -231,6 +315,15 @@ namespace GastoTransparenteMunicipal.Helpers
                     informeAdmServicios.UpdatedOn = this.UpdatedOn;
                     informeAdmServicios.IdGroupInformePersonal = this.IdGroupInforme;
 
+                    var validationResult = db.Entry(informeAdmServicios).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
+
                     InformeAdmServicios.Add(informeAdmServicios);
                 }
             }
@@ -249,7 +342,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Proveedor_SaludInforme informeSalud = Mapper.Map<IRow, Proveedor_SaludInforme>(row);
                     informeSalud.UpdatedOn = this.UpdatedOn;
-                    informeSalud.IdGroupInformeProveedores = this.IdGroupInforme;
+                    informeSalud.IdGroupInformeProveedores = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeSalud).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeSalud.Add(informeSalud);
                 }
@@ -269,7 +371,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Proveedor_EducacionInforme informeEducacion = Mapper.Map<IRow, Proveedor_EducacionInforme>(row);
                     informeEducacion.UpdatedOn = this.UpdatedOn;
-                    informeEducacion.IdGroupInformeProveedores = this.IdGroupInforme;
+                    informeEducacion.IdGroupInformeProveedores = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeEducacion).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeEducacion.Add(informeEducacion);
                 }
@@ -290,6 +401,15 @@ namespace GastoTransparenteMunicipal.Helpers
                     Proveedor_CementerioInforme informeCementerio = Mapper.Map<IRow, Proveedor_CementerioInforme>(row);
                     informeCementerio.UpdatedOn = this.UpdatedOn;
                     informeCementerio.IdGroupInformeProveedores = this.IdGroupInforme;
+                    
+                    var validationResult = db.Entry(informeCementerio).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeCementerio.Add(informeCementerio);
                 }
@@ -309,7 +429,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     Proveedor_AdmInforme informeAdmServicios = Mapper.Map<IRow, Proveedor_AdmInforme>(row);
                     informeAdmServicios.UpdatedOn = this.UpdatedOn;
-                    informeAdmServicios.IdGroupInformeProveedores = this.IdGroupInforme;
+                    informeAdmServicios.IdGroupInformeProveedores = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeAdmServicios).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeAdmServicios.Add(informeAdmServicios);
                 }
@@ -329,7 +458,16 @@ namespace GastoTransparenteMunicipal.Helpers
                 {
                     CorporacionInforme informeCorporaciones = Mapper.Map<IRow, CorporacionInforme>(row);
                     informeCorporaciones.UpdatedOn = this.UpdatedOn;
-                    informeCorporaciones.IdGroupInforme = this.IdGroupInforme;
+                    informeCorporaciones.IdGroupInforme = this.IdGroupInforme;                    
+
+                    var validationResult = db.Entry(informeCorporaciones).GetValidationResult();
+                    if (!validationResult.IsValid)
+                    {
+                        var errorsMessages = validationResult.ValidationErrors.Select(r => r.ErrorMessage).ToList();
+                        var error = "Error de carga: " + string.Join("|", errorsMessages);
+
+                        throw new Exception(error);
+                    }
 
                     InformeCorporaciones.Add(informeCorporaciones);
                 }

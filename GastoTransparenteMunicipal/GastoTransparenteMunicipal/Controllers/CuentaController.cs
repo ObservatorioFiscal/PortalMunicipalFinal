@@ -120,9 +120,7 @@ namespace GastoTransparenteMunicipal.Controllers
             return View();
         }
 
-        public ActionResult
-           
-           ResetPasswordConfirmation()
+        public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }

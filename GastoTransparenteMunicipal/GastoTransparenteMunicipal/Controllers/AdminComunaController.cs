@@ -24,8 +24,21 @@ namespace GastoTransparenteMunicipal.Controllers
     public class AdminComunaController : BaseController
     {
         private const string errorPassword = "Error Password";
-        private const string errorMessage = "Error en columna numero ";
+        private const string errorMessage = "Error al leer el tipo de dato en columna numero {0}, el valor es diferente del esperado.";
+        private const string errorCarga = "Error de carga";
         private const string okMessage = "OK";
+
+        private string ErrorLoadExcel(Exception ex)
+        {
+            var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
+            position = position + 8;
+            var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
+            var columnPositionint = 0;
+            int.TryParse(columnPositionString, out columnPositionint);
+            columnPositionint++;
+            var message = string.Format(errorMessage, columnPositionint);
+            return message;
+        }
 
         public StringBuilder StringCSV<T>(List<T> listItem)
         {
@@ -673,15 +686,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;                
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -705,15 +711,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -737,15 +736,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -769,17 +761,10 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
-            }      
+            }
         }
 
         #endregion
@@ -933,15 +918,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -965,15 +943,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -997,15 +968,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1029,15 +993,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1191,15 +1148,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1224,15 +1174,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1256,15 +1199,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1288,15 +1224,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1353,15 +1282,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1459,15 +1381,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1567,15 +1482,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1601,15 +1509,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1633,15 +1534,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
@@ -1666,15 +1560,8 @@ namespace GastoTransparenteMunicipal.Controllers
             }
             catch (Exception ex)
             {
-                var position = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().IndexOf("GetCell");
-                position = position + 8;
-                var columnPositionString = ((AutoMapper.AutoMapperMappingException)ex).PropertyMap.CustomExpression.ToString().Substring(position, 1);
-                var columnPositionint = 0;
-                int.TryParse(columnPositionString, out columnPositionint);
-                columnPositionint++;
-                var message = errorMessage + columnPositionint;
-
-                var resultJson = new { isValid = !isValid, message = message };
+                var message = ex.Message.Contains(errorCarga) ? ex.Message : ErrorLoadExcel(ex);
+                var resultJson = new { isValid = !isValid, message = ex.Message };
                 return Json(resultJson);
             }
         }
