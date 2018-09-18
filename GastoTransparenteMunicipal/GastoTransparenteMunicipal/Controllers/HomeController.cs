@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GastoTransparenteMunicipal.Helpers;
+using GastoTransparenteMunicipal.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +11,41 @@ namespace GastoTransparenteMunicipal.Controllers
 {
     public class HomeController : BaseController
     {
+        public ActionResult ServiceStatus(string validator)
+        {
+            validator = "voluptatem";
+            ViewBag.Destacado = "hidden";
+            ViewBag.activos = new List<bool>
+            {
+                false,false,false,false
+            };
+            var municipios = db.Municipalidad.Where(r => r.Activa == true).ToList();
+            ViewBag.logo = "municipio.png";
+
+            ServiceStatus serviceStatus = new ServiceStatus();
+            if (validator == "voluptatem")
+            {
+                BlobService blobService = new BlobService(GetAccountName, GetAccountKey);
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+                        serviceStatus.DataBase = true;
+                    }
+                    catch (SqlException)
+                    {
+                        serviceStatus.DataBase = false;
+                    }
+                }
+
+                serviceStatus.Email = EmailService.CheckConnection();
+                serviceStatus.BlobService = blobService.CheckConnection();
+
+            }
+            return View(serviceStatus);
+        }
+
         //GET: Pagina de Inicio
         public ActionResult Index()
         {

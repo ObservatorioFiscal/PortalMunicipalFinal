@@ -89,7 +89,7 @@ namespace GastoTransparenteMunicipal.Controllers
             //List<Core.Municipalidad> municipios = db.Municipalidad.Where(r => !r.Activa).ToList();
             List<Core.Municipalidad> municipios = db.Municipalidad.ToList();
             return View(municipios);
-        }
+        }        
 
         [HttpPost]
         public JsonResult ActivarMunicipio(string idMunicipio)

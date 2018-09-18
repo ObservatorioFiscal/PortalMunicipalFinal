@@ -13,10 +13,8 @@ using System.Web.Mvc;
 namespace GastoTransparenteMunicipal.Controllers
 {
     public class BaseController : Controller
-    {
-        //private string connectionString = "Server=tcp:serverobservatorio.database.windows.net,1433;Initial Catalog=GastoTransparenteMunicipal;Persist Security Info=False;User ID=adminserverprueba;Password=Observatori02016;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-        private readonly string connectionString = ConfigurationManager.AppSettings["ConexionBddBulk"];
+    {        
+        protected readonly string connectionString = ConfigurationManager.AppSettings["ConexionBddBulk"];
 
         public GastoTransparenteMunicipalEntities db = new GastoTransparenteMunicipalEntities();        
         

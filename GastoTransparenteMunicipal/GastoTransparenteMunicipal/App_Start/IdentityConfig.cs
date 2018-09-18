@@ -46,6 +46,24 @@ namespace GastoTransparenteMunicipal
             smtpClient.EnableSsl = true;
             smtpClient.Send(msg);
         }
+
+        public static bool CheckConnection()
+        {
+            bool isConnected = true;
+            try
+            {
+                IdentityMessage message = new IdentityMessage();
+                message.Destination = ConfigurationManager.AppSettings["Email"].ToString();
+                message.Subject = "TEST MESSAGE";
+                message.Body = "TEST MESSAGE";
+                SendMail(message);
+                return isConnected;
+            }
+            catch(Exception myException)
+            {
+                return !isConnected;
+            }            
+        }
     }
 
     public class SmsService : IIdentityMessageService

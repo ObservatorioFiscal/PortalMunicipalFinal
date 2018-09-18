@@ -37,5 +37,25 @@ namespace GastoTransparenteMunicipal.Helpers
             // blockBlob.DownloadToStream(Response.OutputStream);
             return blockBlob;
         }
+
+        public bool CheckConnection()
+        {
+            string containerCheck = "containercheckconnection";
+            bool isConnected = true;
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference(containerCheck);
+
+            try
+            {
+                container.CreateIfNotExists();
+                container.DeleteIfExists();
+                return isConnected;
+            }
+            catch(Exception ex)
+            {
+                return !isConnected;
+            }            
+        }
     }
 }

@@ -1,0 +1,109 @@
+﻿@model GastoTransparenteMunicipal.Models.ServiceStatus
+
+@{
+    ViewBag.Title = "Estado de servicios";
+}
+
+
+<div class="row">
+    <div class="col-12 homefont">
+    </div>
+    <div class="relative margin-top">
+        <p class="text-center">
+            <img class="img-fluid" src="~/Content/image/municipiosblanco/municipio.png" />
+        </p>
+        <h3 class="text-center blanco ">
+            Bienvenido al <br /> Portal de Cuentas Claras Municipal
+        </h3>
+        <p class="text-center blanco">“Por una rendición de cuenta entendible para el vecino”</p>
+    </div>
+
+    <div class="col-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 salto">
+                    <table class="table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Servicio
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Base de datos
+                                </td>
+
+                                    @{if (Model.DataBase == true)
+                                        {
+                                            <td>
+                                                Correcto
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                No disponible
+                                            </td>
+                                        }
+                                    }
+                            </tr>
+                            <tr>
+                                <td>
+                                    Email
+                                </td>
+                                <td>
+                                    @{if (Model.Email == true)
+                                        {
+                                        <td>
+                                            Correcto
+                                        </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                No disponible
+                                            </td>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Blob service
+                                </td>
+                                <td>
+                                    @{if (Model.BlobService == true)
+                                        {
+                                        <td>
+                                            Correcto
+                                        </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                No disponible
+                                            </td>
+                                        }
+                                    }
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row padding-Div">
+            </div>
+
+            <div class="row padding-Div">
+            </div>
+        </div>
+    </div>
+</div>
+
