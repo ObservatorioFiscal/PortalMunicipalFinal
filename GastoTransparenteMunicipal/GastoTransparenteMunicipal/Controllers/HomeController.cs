@@ -11,9 +11,23 @@ namespace GastoTransparenteMunicipal.Controllers
 {
     public class HomeController : BaseController
     {
+        public ActionResult ServiceStatus()
+        {
+            ServiceStatus serviceStatus = new ServiceStatus();
+            ViewBag.Destacado = "hidden";
+            ViewBag.activos = new List<bool>
+            {
+                false,false,false,false
+            };
+            ViewBag.logo = "municipio.png";
+            return View(serviceStatus);
+        }
+
+
+        [HttpPost]
         public ActionResult ServiceStatus(string validator)
         {
-            validator = "voluptatem";
+            //validator = "v0#luptatem!ObservatorioConsejo!#";
             ViewBag.Destacado = "hidden";
             ViewBag.activos = new List<bool>
             {
@@ -23,7 +37,7 @@ namespace GastoTransparenteMunicipal.Controllers
             ViewBag.logo = "municipio.png";
 
             ServiceStatus serviceStatus = new ServiceStatus();
-            if (validator == "voluptatem")
+            if (validator == "v0#luptatem!ObservatorioConsejo!#")
             {
                 BlobService blobService = new BlobService(GetAccountName, GetAccountKey);
                 using (SqlConnection connection = new SqlConnection(connectionString))

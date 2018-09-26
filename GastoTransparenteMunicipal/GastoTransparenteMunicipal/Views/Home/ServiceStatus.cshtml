@@ -17,93 +17,111 @@
         </h3>
         <p class="text-center blanco">“Por una rendición de cuenta entendible para el vecino”</p>
     </div>
-
-    <div class="col-12">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 salto">
-                    <table class="table-responsive">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Servicio
-                                </th>
-                                <th>
-                                    Estado
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    Base de datos
-                                </td>
-
-                                    @{if (Model.DataBase == true)
-                                        {
-                                            <td>
-                                                Correcto
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                No disponible
-                                            </td>
-                                        }
-                                    }
-                            </tr>
-                            <tr>
-                                <td>
-                                    Email
-                                </td>
-                                <td>
-                                    @{if (Model.Email == true)
-                                        {
+</div>
+<div class="row">
+    <div class="container">
+        <div class="col-12">
+            <h1>Estado de los Dependencias.<br /><br /></h1>
+        </div>
+        @if (Model.BlobService == false && Model.Email == false && Model.DataBase == false)
+        {
+            <form action="@Url.Action("ServiceStatus","Home")" method="post">
+                <input type="password" class="form-control" id="validator" name="validator" placeholder="Contraseña" /><br />
+                <button class="btn">Comprobar</button>
+            </form>
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 salto">
+                            <table class="table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Servicio
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
                                         <td>
-                                            Correcto
+                                            Base de datos
                                         </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                No disponible
-                                            </td>
-                                        }
-                                    }
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Blob service
-                                </td>
-                                <td>
-                                    @{if (Model.BlobService == true)
-                                        {
-                                        <td>
-                                            Correcto
-                                        </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                No disponible
-                                            </td>
-                                        }
-                                    }
-                                </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
+                                        @{if (Model.DataBase == true)
+                                            {
+                                                <td>
+                                                    Correcto
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    No disponible
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Email
+                                        </td>
+                                        @{if (Model.Email == true)
+                                            {
+                                                <td>
+                                                    Correcto
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    No disponible
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Blob service
+                                        </td>
+                                        @{if (Model.BlobService == true)
+                                            {
+                                                <td>
+                                                    Correcto
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    No disponible
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row padding-Div">
+                    </div>
+
+                    <div class="row padding-Div">
+                    </div>
                 </div>
             </div>
-            <div class="row padding-Div">
-            </div>
+        }
 
-            <div class="row padding-Div">
-            </div>
-        </div>
     </div>
 </div>
+
+<div class="row padding-Div">
+</div>
+    
+
+
 
