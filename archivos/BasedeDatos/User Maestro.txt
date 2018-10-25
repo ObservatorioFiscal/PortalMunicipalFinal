@@ -1,0 +1,6 @@
+Insert into AspNetUsers values(	'38da9d5a-6954-4e57-bcf5-6236d5186552','maestro@cuentasclaras.de'	,1	,'AFNQ47yWQRMUSdA3hKunOQ90kGWqKyzzUD01UM6114HXkOgku4qb9AjwKhHvG8dqyg==',	'2da9cf6b-9bdc-4e5f-93a3-76e99832767a'	,NULL	,0,	0,	NULL	,1	,0,	'maestro@cuentasclaras.de')
+insert into AspNetUserRoles values('38da9d5a-6954-4e57-bcf5-6236d5186552',346)
+
+
+//User: Maestro@cuentasclaras.de
+//Pass: Qwerty1234
