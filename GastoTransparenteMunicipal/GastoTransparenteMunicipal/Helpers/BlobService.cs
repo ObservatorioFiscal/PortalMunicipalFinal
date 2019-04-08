@@ -24,8 +24,12 @@ namespace GastoTransparenteMunicipal.Helpers
         {
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference(ContainerName.ToLower());
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(BlobName);                      
-            blockBlob.UploadText(data.ToString(),Encoding.UTF8);                
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(BlobName);
+
+            blockBlob.Properties.ContentType = "text/csv; charset=utf-8";
+            blockBlob.UploadText(data.ToString(), new UTF8Encoding(true));
+            
+            //blockBlob.UploadText(data.ToString(),Encoding.UTF8);                
             return blockBlob;         
         }
      

@@ -33,7 +33,7 @@
                             </span>
                         </small>
                     </h1>
-                    <p>En esta sección sabrás cuales son los principales proveedores que le venden bienes o le prestan servicios al municipio. </p>
+                    <p>En esta sección sabrás cuales son los principales proveedores que le venden bienes o le prestan servicios al municipio. Las cifras corresponden a las compras devengadas y emitidas con sus respectivos decretos de pago, los cuales son registrados en el sistema contable municipal.</p>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
                     </div>
                     <div id="tabla" class="row muntotal celda">
                         <div class="col-8"><h6><b>Proveedor                   <a id="busquedaNombre" onclick="orden(1)"><span class="md-24 gris icon-sortasc"></span></a></b></h6></div>
-                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortasc"></span></a></b></h6></div>
+                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortdesc"></span></a></b></h6></div>
                     </div>
 
                     <div id="scrollbar1">
@@ -80,8 +80,8 @@
                         <p class="text-right">
 
                             Compartir:
-                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
-                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter" title="Comparte en Twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook" title="Comparte en Facebook"></a>
                             <a onclick="DescargaDataset('proveedores')" class="btn btn-xs">Descarga Dataset</a>
                         </p>
                     </div>
@@ -399,18 +399,18 @@
         $(document).ready(function () {
             $("select").resizeselect();
             drawChart();
-            llenarTabla(0);
+            llenarTabla(3);
 
             $("#ano").change(function () {
                 clearAll();
                 drawChart();
-                llenarTabla(0);
+                llenarTabla(3);
             });
             $("#origenData").change(function () {
                 $("#ano")
                 clearAll();
                 drawChart();
-                llenarTabla(0);
+                llenarTabla(3);
             });
         });
     </script>

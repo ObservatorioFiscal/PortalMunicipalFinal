@@ -63,8 +63,9 @@
 
                     <p class="text-right margin-cero">
                         Ver detalle por:
-                        <span id="cuuuu" class="seleccionc seleccioncambio" onclick="cambio('CUENTA');return false;"> Cuenta </span> /
-                        <span id="arrrr" class="seleccionc" onclick="cambio('AREA');return false;"> Area </span>
+                        <span id="arrrr" class="seleccionc" onclick="cambio('AREA');return false;" title="¿En qué se gasta?"> Area </span> /
+                        <span id="cuuuu" class="seleccionc seleccioncambio" onclick="cambio('CUENTA');return false;" title="¿Cómo se gasta?"> Cuenta </span>
+
                     </p>
                     <div id="chart_div" style="min-height:400px;" oncontextmenu="return false;"></div>
                     <div class="numero1">
@@ -88,8 +89,8 @@
                         <p class="text-right">
 
                             Compartir:
-                            <a onclick="redesclick('facebook')" class="md-24 icon-twitter"></a>
-                            <a onclick="redesclick('twitter')" class="md-24 icon-facebook"></a>
+                            <a onclick="redesclick('twitter')" class="md-24 icon-facebook" title="Comparte en Twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-twitter" title="Comparte en Facebook"></a>
                             <a onclick="DescargaDataset('gastos')" class="btn btn-xs">Descarga Dataset</a>
                         </p>
                     </div>
@@ -105,12 +106,13 @@
             <h5><b id="classNombre"></b></h5>
         </div>
         <div class="descripcion">
-            <p>Ingresado:</p>
+            <p>Gastado:</p>
             <h5 id="valueTooltip1"></h5>
             <p><small id="porcentaje1"></small></p>
             <p><br>Presupuestado:</p>
             <h5 id="valueTooltip2"></h5>
             <p><small id="porcentaje2"></small><br><br></p>
+            <p class="muntotal">*<small> Los valores toman en cuenta los filtros de la parte superior de la visualización.</small></p>
         </div>
     </div>
 </div>
@@ -210,12 +212,21 @@
                         return d.fondo;
                     })
                     .on("mouseover", function (d) {
-
+                        var papito = document.getElementById("NOMBREPAPA").value;
+                        var papito2 = "";
+                        if (papito == "" || papito == null) {
+                            papito = "l total del Gasto Municipal";
+                            papito2 = "l Presupuesto Total";
+                        }
+                        else {
+                            papito2 = " lo Presupuestado en " + papito;
+                            papito = "l Gasto en " + papito;
+                        }
                         document.getElementById("classNombre").innerHTML = d.className;
                         document.getElementById("valueTooltip1").innerHTML = "$" + d.valueTooltip1 + " millones";
-                        document.getElementById("porcentaje1").innerHTML = "Equivale al " + d.porcentaje1 + "% del Ingreso Municipal.";
+                        document.getElementById("porcentaje1").innerHTML = "Equivale al " + d.porcentaje1 + "% de" + papito + ".";
                         document.getElementById("valueTooltip2").innerHTML = "$" + d.valueTooltip2 + " millones";
-                        document.getElementById("porcentaje2").innerHTML = "Equivale al " + d.porcentaje2 + "% del Ingreso Municipal.";
+                        document.getElementById("porcentaje2").innerHTML = "Equivale al " + d.porcentaje2 + "% de" + papito2 + ".";
                         tooltip.style("opacity", "1")
                     })
                     .on("mousemove", function (d) {

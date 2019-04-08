@@ -65,7 +65,7 @@
                     </div>
                     <div id="tabla" class="row muntotal celda">
                         <div class="col-8"><h6><b>Organización                   <a id="busquedaNombre" onclick="orden(1)"><span class="md-24 gris icon-sortasc"></span></a></b></h6></div>
-                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortasc"></span></a></b></h6></div>
+                        <div class="col-4 alineacion"><h6><b>Monto $ <a id="busquedaMonto" onclick="orden(3)"><span class="md-24 icon-sortdesc"></span></a></b></h6></div>
                     </div>
 
                     <div id="scrollbar1">
@@ -89,8 +89,8 @@
                         <p class="text-right">
 
                             Compartir:
-                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
-                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter" title="Comparte en Twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook" title="Comparte en Facebook"></a>
                             <a onclick="DescargaDataset('subsidios')" class="btn btn-xs">Descarga Dataset</a>
                         </p>
                     </div>
@@ -239,7 +239,7 @@
         function nuevoPapa(item) {
             return '\
                 <div class="row celda"  onclick="verDetalle('+ item.IdNivel2 + ')" id="item-'+ item.IdNivel2 +'">\
-                    <div class="col-9"><span class="md-24 muntotal icon-Recurso5"> </span>' + item.Nombre + '<small>(' + item.Categoria+')</small></div>\
+                    <div class="col-9"><span class="md-24 muntotal icon-Recurso5"> </span>' + item.Nombre + '<small> (' + item.Categoria+')</small></div>\
                     <div class="col-3 alineacion">$'+ item.Monto.toLocaleString() +'</div>\
                 </div>\
                 ';
@@ -274,11 +274,22 @@
                     ';
         }
 
+        function clearAll() {
+            $("#chart").html('');
+            $("#listapapa").html('');
+            $("#hijotabla").remove();
+        }
 
         $(document).ready(function () {
             $("select").resizeselect();
             llenarCirculos();
-            llenarTabla(0);
+            llenarTabla(3);
+
+            $("#ano").change(function () {
+                clearAll();
+                llenarCirculos();
+                llenarTabla(3);
+            });
         });
     </script>
 }

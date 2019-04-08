@@ -34,25 +34,37 @@
                                 @item.Nombre
                             </td>
                             <td>
-                                @item.Gasto_Ano.Last().UpdatedOn.Value.ToShortDateString()
+                                @if (item.Gasto_Ano.Count > 0)
+                                {
+                                    @item.Gasto_Ano.Last().UpdatedOn.Value.ToShortDateString()
+                                }
+                                else
+                                {
+                                    <span> -- </span>
+                                }
                             </td>
                             <td>
-                                @{
-                                    string mes = item.Gasto_Ano.OrderByDescending(r => r.Ano).Select(r => r.Semestre).First().ToString();
-                                }
-                                @switch (mes)
+                                @if(item.Gasto_Ano.Count > 0)
                                 {
-                                    case "1":
-                                        <span>a Marzo </span>
-                                    break;
-                                    case "2":
-                                        <span>a Junio </span>
-                                    break;
-                                    case "3":
-                                        <span>a Septiembre </span>
-                                    break;
+                                    string mes = item.Gasto_Ano.OrderByDescending(r => r.Ano).Select(r => r.Semestre).First().ToString();
+                                    switch (mes)
+                                    {
+                                        case "1":
+                                            <span>a Marzo </span>
+                                            break;
+                                        case "2":
+                                            <span>a Junio </span>
+                                            break;
+                                        case "3":
+                                            <span>a Septiembre </span>
+                                            break;
+                                    }
+                                    @item.Gasto_Ano.OrderByDescending(r => r.Ano).Select(r => r.Ano).First()
                                 }
-                                        @item.Gasto_Ano.OrderByDescending(r=>r.Ano).Select(r=>r.Ano).First()
+                                else
+                                {
+                                    <span> -- </span>
+                                }
                             </td>
                         </tr>
                         }

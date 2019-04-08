@@ -52,8 +52,11 @@ namespace GastoTransparenteMunicipal.Controllers
 
             foreach (DataRow row in dt.Rows)
             {
-                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
-                sb.AppendLine(string.Join("|", fields));
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString().Replace(System.Environment.NewLine, " "));
+
+                string line = string.Join("|", fields);
+                string result = System.Text.RegularExpressions.Regex.Replace(line, @"\r\n?|\n", " ");
+                sb.AppendLine(result);
             }            
 
             return sb;

@@ -37,8 +37,8 @@
                         <p class="text-right">
 
                             Compartir:
-                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter"></a>
-                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook"></a>
+                            <a onclick="redesclick('twitter')" class="md-24 icon-twitter" title="Comparte en Twitter"></a>
+                            <a onclick="redesclick('facebook')" class="md-24 icon-facebook" title="Comparte en Facebook"></a>
                             <a onclick="DescargaDataset('corporaciones')" class="btn btn-xs">Descarga Dataset</a>
                         </p>
                     </div>
@@ -255,7 +255,7 @@
         }
         function sizeDimension() {
             var Width = $("#Grafico").width();
-            $("#Grafico").append("<svg width=" + Width + " height=" + parseInt(Width) / 2 + "></svg>");
+            $("#Grafico").append("<svg width=" + Width + " height=" + parseInt(Width) / 2.2 + "></svg>");
         }
 
         $(document).ready(function () {
@@ -265,8 +265,6 @@
             $("select").change(function () {
                 CreacionGrafico();
             });
-
-
         });
     </script>
 
